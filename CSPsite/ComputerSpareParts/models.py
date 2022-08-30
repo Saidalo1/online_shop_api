@@ -1,8 +1,7 @@
-from itertools import count
-from pyexpat import model
 from django.contrib.auth.models import User
-from tkinter import CASCADE
 from django.db import models
+from django.db.models import IntegerField, Model
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
@@ -24,6 +23,13 @@ class Company(models.Model):
         return self.name
 
 
+class NumberofCores(models.Model):
+    number = models.IntegerField(default=0,
+        validators=[
+            MaxValueValidator(100),
+            MinValueValidator(1)
+        ])
+
 
 class СomputerSparePart(models.Model):
     name = models.CharField(max_length=80)
@@ -35,6 +41,7 @@ class СomputerSparePart(models.Model):
     #rating = models.ForeignKey(Rating, on_delete=models.PROTECT)
     #sale = models.BooleanField(Sales, default=False)
     count = models.IntegerField(default=0)
+    cores = models.ForeignKey(NumberofCores, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['name']
