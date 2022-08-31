@@ -61,5 +61,4 @@ class PartySerializer(serializers.ModelSerializer):
     class Meta:
         model = Party
         fields = '__all__'
-
         

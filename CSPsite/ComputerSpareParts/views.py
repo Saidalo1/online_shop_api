@@ -69,4 +69,3 @@ class PartyViewSet(viewsets.ModelViewSet):
     queryset = Party.objects.all()
     serializer_class = PartySerializer
     pagination_class = PageNumberPagination
-

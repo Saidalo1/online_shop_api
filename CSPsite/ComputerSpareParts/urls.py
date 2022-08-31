@@ -1,4 +1,3 @@
-from django.urls import path
 from .views import *
 from rest_framework import routers
 
@@ -17,5 +16,5 @@ router.register(r'Payments', PaymentsViewSet)
 router.register(r'Party', PartyViewSet)
 
 urlpatterns = [
-    #path('api-v0/csplist', ComputerSparePartsViewSet.as_view())
+
 ] + router.urls
