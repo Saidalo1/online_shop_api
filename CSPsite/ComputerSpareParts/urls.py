@@ -1,3 +1,4 @@
+from os import path
 from .views import *
 from rest_framework import routers
 
@@ -16,5 +17,4 @@ router.register(r'Payments', PaymentsViewSet)
 router.register(r'Party', PartyViewSet)
 
 urlpatterns = [
-
 ] + router.urls

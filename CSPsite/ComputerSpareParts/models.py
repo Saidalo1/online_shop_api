@@ -8,7 +8,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Type(models.Model):
     name = models.CharField(max_length=50)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.name
 
 
@@ -18,7 +18,7 @@ class Company(models.Model):
     email = models.CharField(max_length=30, null=True)
     logo = models.ImageField(upload_to='publisher-logo', null=True)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.name
 
 
@@ -88,7 +88,7 @@ class Party(models.Model):
     price = models.FloatField()
     created_date = models.DateTimeField(auto_now=True)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return f"{self.book} {self.price} {self.count} {self.created_date}"
 
 
@@ -99,7 +99,7 @@ class Sales(models.Model):
     from_date = models.DateField(auto_now=True)
     to_date = models.DateField(auto_now=True)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.title
 
 
@@ -107,7 +107,7 @@ class Clients(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=15)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return f"{self.user}"
 
 
@@ -116,7 +116,7 @@ class Basket(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     count = models.IntegerField(default=0)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return f"{self.computersparepart} {self.user} {self.count}"
 
 
@@ -131,7 +131,7 @@ class Order(models.Model):
     # 4-received
     status = models.IntegerField(default=0)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return f"{self.computersparepart} {self.user} {self.count} {self.status}"
 
 
@@ -149,5 +149,5 @@ class Payments(models.Model):
     amount = models.FloatField(default=0)
     type = models.ForeignKey(PaymentType, on_delete=models.CASCADE)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return f"{self.computersparepart} {self.user} {self.amount}"
