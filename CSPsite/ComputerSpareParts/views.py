@@ -2,13 +2,16 @@ from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from .serializers import *
 from .models import *
-
+from rest_framework import filters
 
 class ComputerSparePartsViewSet(viewsets.ModelViewSet):
     queryset = СomputerSparePart.objects.all()
     serializer_class = CSPSerializer
     pagination_class = PageNumberPagination
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter)
+    search_fields = ['name', 'description']
     filterset_fields = ['name', 'description']
+    ordering_fields = ['name', 'description']
 
 class CSPImagesViewSet(viewsets.ModelViewSet):
     queryset = CSPImages.objects.all()
@@ -56,6 +59,13 @@ class BasketViewSet(viewsets.ModelViewSet):
     queryset = Basket.objects.all()
     serializer_class = BasketSerializer
     pagination_class = PageNumberPagination
+
+
+def basket(request):
+    basket = Basket()
+    basket.computer_spare_part = request.data
+    basket.user = request.user
+    basket.save()
 
 
 class OrdersViewSet(viewsets.ModelViewSet):
