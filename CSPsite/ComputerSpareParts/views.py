@@ -2,13 +2,16 @@ from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from .serializers import *
 from .models import *
-
+from rest_framework import filters
 
 class ComputerSparePartsViewSet(viewsets.ModelViewSet):
     queryset = СomputerSparePart.objects.all()
     serializer_class = CSPSerializer
     pagination_class = PageNumberPagination
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter)
+    search_fields = ['name', 'description']
     filterset_fields = ['name', 'description']
+    ordering_fields = ['name', 'description']
 
 class CSPImagesViewSet(viewsets.ModelViewSet):
     queryset = CSPImages.objects.all()

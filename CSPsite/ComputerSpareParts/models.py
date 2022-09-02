@@ -112,7 +112,8 @@ class Clients(models.Model):
 
 
 class Basket(models.Model):
-    computersparepart = models.ForeignKey(СomputerSparePart, on_delete=models.CASCADE)
+    #{'model': 'CPU', 'id': 22}
+    computer_spare_part = models.JSONField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     count = models.IntegerField(default=0)
 
