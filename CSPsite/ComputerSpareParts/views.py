@@ -4,8 +4,9 @@ from .serializers import *
 from .models import *
 from rest_framework import filters
 
+
 class ComputerSparePartsViewSet(viewsets.ModelViewSet):
-    queryset = СomputerSparePart.objects.all()
+    queryset = ComputerSparePart.objects.all()
     serializer_class = CSPSerializer
     pagination_class = PageNumberPagination
     filter_backends = (filters.SearchFilter, filters.OrderingFilter)
@@ -13,8 +14,15 @@ class ComputerSparePartsViewSet(viewsets.ModelViewSet):
     filterset_fields = ['name', 'description']
     ordering_fields = ['name', 'description']
 
+    def create(self, request, *args, **kwargs):
+        print(self.name)
+        print(self.description)
+        if request.method == "POST":
+            return super().create(request, *args, **kwargs)
+
+
 class CSPImagesViewSet(viewsets.ModelViewSet):
-    queryset = CSPImages.objects.all()
+    queryset = Images.objects.all()
     serializer_class = CSPImagesSerializer
     pagination_class = PageNumberPagination
 
@@ -38,7 +46,7 @@ class RatingViewSet(viewsets.ModelViewSet):
 
 
 class CommentsViewSet(viewsets.ModelViewSet):
-    queryset = Comment.objects.all()
+    queryset = Comments.objects.all()
     serializer_class = CommentSerializer
     pagination_class = PageNumberPagination
 

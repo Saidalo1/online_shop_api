@@ -4,12 +4,12 @@ from .models import *
 
 class CSPSerializer(serializers.ModelSerializer):
     class Meta:
-        model = СomputerSparePart
+        model = ComputerSparePart
         fields = '__all__'
 
 class CSPImagesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CSPImages
+        model = Images
         fields = '__all__'
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -29,7 +29,7 @@ class RatingSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Comment
+        model = Comments
         fields = '__all__'
 
 class SalesSerializer(serializers.ModelSerializer):
