@@ -68,12 +68,11 @@ class BasketViewSet(viewsets.ModelViewSet):
     serializer_class = BasketSerializer
     pagination_class = PageNumberPagination
 
-
-def basket(request):
-    basket = Basket()
-    basket.computer_spare_part = request.data
-    basket.user = request.user
-    basket.save()
+    def basket(request):
+        basket = Basket()
+        basket.computer_spare_part = request.data
+        basket.user = request.user
+        basket.save()
 
 
 class OrdersViewSet(viewsets.ModelViewSet):
