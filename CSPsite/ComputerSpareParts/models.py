@@ -2,17 +2,15 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-# Create your models here.
+
+# class Type(models.Model):
+#     name = models.CharField(max_length=50)
+
+#     def __str__(self):
+#         return self.name
 
 
-class Type(models.Model):
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name
-
-
-class Company(models.Model):
+class CompanyForCPU(models.Model):
     name = models.CharField(max_length=200)
     city = models.CharField(max_length=100)
     email = models.CharField(max_length=30, null=True)
@@ -21,14 +19,14 @@ class Company(models.Model):
     def __str__(self):
         return self.name
 
-
-class СomputerSparePart(models.Model):
+#CentralProcessingUnit
+class CPU(models.Model):
     name = models.CharField(max_length=80)
     description = models.CharField(max_length=1000)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    company = models.ForeignKey(CompanyForCPU, on_delete=models.CASCADE)
     #image = models.ImageField(upload_to='CSP-images', null=True)
     created_date = models.DateTimeField(auto_now=True)
-    type = models.ForeignKey(Type, on_delete=models.CASCADE, null=False)
+    #type = models.ForeignKey(Type, on_delete=models.CASCADE, null=False)
     #rating = models.ForeignKey(Rating, on_delete=models.PROTECT)
     #sale = models.BooleanField(Sales, default=False)
     сores = models.IntegerField(default=0,
@@ -46,7 +44,6 @@ class СomputerSparePart(models.Model):
             MaxValueValidator(8.429),
             MinValueValidator(0)
         ])
-    
     count = models.IntegerField(default=0)
 
 
@@ -59,40 +56,41 @@ class СomputerSparePart(models.Model):
 
 
 
-class CSPImages(models.Model):
-    image = models.ImageField(upload_to='CSP-images')
-    computerSparePart = models.ForeignKey(СomputerSparePart, on_delete=models.CASCADE)
+class CPUImages(models.Model):
+    image = models.ImageField(upload_to='CSP-images/CPU-images')
+    cpu = models.ForeignKey(CPU, on_delete=models.CASCADE)
 
 
-class Rating(models.Model):
+class CPURating(models.Model):
     rating = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    computersparepart = models.ForeignKey(СomputerSparePart, on_delete=models.CASCADE)
+    cpu = models.ForeignKey(CPU, on_delete=models.CASCADE)
 
     def __init__(self):
-        return f"{self.user} {self.computersparepart} {self.rating}"
+        return f"{self.user} {self.cpu} {self.rating}"
 
-class Comment(models.Model):
-    text = models.TextField(default='')
+
+class CPUComments(models.Model):
+    text = models.TextField(default='', max_length=500, null=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    computersparepart = models.ForeignKey(СomputerSparePart, on_delete=models.CASCADE)
+    cpu = models.ForeignKey(CPU, on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now=True)
 
     def __init__(self):
-        return f"{self.computersparepart} {self.user} {self.created_date}"
+        return f"{self.cpu} {self.user} {self.text} {self.created_date}"
 
 
-class Party(models.Model):
-    computersparepart = models.ForeignKey(СomputerSparePart, on_delete=models.CASCADE)
+class CPUParty(models.Model):
+    cpu = models.ForeignKey(CPU, on_delete=models.CASCADE)
     count = models.IntegerField()
     price = models.FloatField()
     created_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.book} {self.price} {self.count} {self.created_date}"
+        return f"{self.cpu} {self.price} {self.count} {self.created_date}"
 
 
-class Sales(models.Model):
+class SalesForCpu(models.Model):
     percent = models.FloatField(default=0)
     title = models.CharField(max_length=200)
     description = models.TextField(max_length=1000)
@@ -137,10 +135,7 @@ class Order(models.Model):
 
 
 class PaymentType(models.Model):
-    # type:
-    # 1-cash
-    # 2-credit card
-    # 3-transfer
+    # 1-credit card
     name = models.CharField(max_length=60)
 
 
