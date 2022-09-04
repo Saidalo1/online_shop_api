@@ -44,6 +44,10 @@ class ComputerSparePart(models.Model):
             MaxValueValidator(8.429),
             MinValueValidator(0)
         ])
+    processor_series = models.CharField(max_length=300)#для видеокарты (пока что CharField)
+    graphics_processing_unit = models.CharField(max_length=300)#для видеокарты (пока что CharField)
+    graphics_processing_unit_frequency = models.CharField(max_length=300)#для видеокарты (пока что CharField)
+    video_memory_type = models.CharField(max_length=300)#для видеокарты (пока что CharField)
     count = models.IntegerField(default=0)
 
 
@@ -87,7 +91,7 @@ class Party(models.Model):
     created_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.cpu} {self.price} {self.count} {self.created_date}"
+        return f"{self.computer_spare_part} {self.price} {self.count} {self.created_date}"
 
 
 class Sales(models.Model):

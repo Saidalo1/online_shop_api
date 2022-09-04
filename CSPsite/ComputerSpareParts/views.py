@@ -15,10 +15,10 @@ class ComputerSparePartsViewSet(viewsets.ModelViewSet):
     ordering_fields = ['name', 'description']
 
     def create(self, request, *args, **kwargs):
-        print(self.name)
-        print(self.description)
         if request.method == "POST":
-            return super().create(request, *args, **kwargs)
+            if request.POST.get("type") == "2":
+                # if request.POST.get("type")
+                return super().create(request, *args, **kwargs)
 
 
 class CSPImagesViewSet(viewsets.ModelViewSet):
@@ -91,3 +91,7 @@ class PartyViewSet(viewsets.ModelViewSet):
     queryset = Party.objects.all()
     serializer_class = PartySerializer
     pagination_class = PageNumberPagination
+
+    def create(self, request, *args, **kwargs):
+        if request.method == "POST":
+            return super().create(request, *args, **kwargs)
