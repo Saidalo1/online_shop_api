@@ -16,7 +16,7 @@ class Company(models.Model):
     email = models.CharField(max_length=30, null=True)
     logo = models.ImageField(upload_to='publisher-logo', null=True)
 
-    def __str__(self):
+    def __str__(self): 
         return self.name
 
 
