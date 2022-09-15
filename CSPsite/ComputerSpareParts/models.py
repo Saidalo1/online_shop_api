@@ -44,10 +44,10 @@ class ComputerSparePart(models.Model):
             MaxValueValidator(8.429),
             MinValueValidator(0)
         ])
-    processor_series = models.CharField(max_length=300)#для видеокарты (пока что CharField)
-    graphics_processing_unit = models.CharField(max_length=300)#для видеокарты (пока что CharField)
-    graphics_processing_unit_frequency = models.CharField(max_length=300)#для видеокарты (пока что CharField)
-    video_memory_type = models.CharField(max_length=300)#для видеокарты (пока что CharField)
+    processor_series = models.CharField(max_length=300, null=True)#для видеокарты (пока что CharField)
+    graphics_processing_unit = models.CharField(max_length=300, null=True)#для видеокарты (пока что CharField)
+    graphics_processing_unit_frequency = models.CharField(max_length=300, null=True)#для видеокарты (пока что CharField)
+    video_memory_type = models.CharField(max_length=300, null=True)#для видеокарты (пока что CharField)
     count = models.IntegerField(default=0)
 
 

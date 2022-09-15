@@ -16,10 +16,11 @@ class ComputerSparePartsViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         if request.method == "POST":
-            if request.POST.get("type") == "2":
-                # if request.POST.get("type")
-                return super().create(request, *args, **kwargs)
-
+            if request.POST.get("type") == "1":
+                if request.POST.get("processor_series") == '' and request.POST.get("graphics_processing_unit") == '' and request.POST.get("graphics_processing_unit_frequency") == '' and request.POST.get("video_memory_type") == '':
+                    return super().create(request, *args, **kwargs)
+                else:
+                    pass
 
 class CSPImagesViewSet(viewsets.ModelViewSet):
     queryset = Images.objects.all()
