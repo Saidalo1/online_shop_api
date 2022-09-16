@@ -1,0 +1,171 @@
+{% load i18n static admin_volt %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+{% get_direction as direction %}
+{% get_admin_setting as admin_setting %}
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>{% block title %}{% endblock %}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="title" content="Volt - Free Bootstrap 5 Dashboard">
+    <meta name="author" content="Themesberg">
+    <meta name="description"
+          content="Volt Pro is a Premium Bootstrap 5 Admin Dashboard featuring over 800 components, 10+ plugins and 20 example pages using Vanilla JS.">
+    <meta name="keywords"
+          content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, themesberg, themesberg dashboard, themesberg admin dashboard"/>
+    <link rel="canonical" href="https://appseed.us/admin-dashboards/django-dashboard-volt">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet"/>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://demo.themesberg.com/volt-pro">
+    <meta property="og:title" content="Volt - Free Bootstrap 5 Dashboard">
+    <meta property="og:description"
+          content="Volt Pro is a Premium Bootstrap 5 Admin Dashboard featuring over 800 components, 10+ plugins and 20 example pages using Vanilla JS.">
+    <meta property="og:image"
+          content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-pro-bootstrap-5-dashboard/volt-pro-preview.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://demo.themesberg.com/volt-pro">
+    <meta property="twitter:title" content="Volt - Free Bootstrap 5 Dashboard">
+    <meta property="twitter:description"
+          content="Volt Pro is a Premium Bootstrap 5 Admin Dashboard featuring over 800 components, 10+ plugins and 20 example pages using Vanilla JS.">
+    <meta property="twitter:image"
+          content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-pro-bootstrap-5-dashboard/volt-pro-preview.jpg">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="120x120"
+          href="{% static 'admin_volt/assets/img/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32"
+          href="{% static 'admin_volt/assets/img/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16"
+          href="{% static 'admin_volt/assets/img/favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'admin_volt/assets/img/favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'admin_volt/assets/img/favicon/safari-pinned-tab.svg' %}" color="#ffffff">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+
+    <link type="text/css" href="{% static 'admin_volt/assets/vendor/sweetalert2/dist/sweetalert2.min.css' %}"
+          rel="stylesheet">
+
+    <link type="text/css" href="{% static 'admin_volt/assets/vendor/notyf/notyf.min.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'admin_volt/assets/css/volt.css' %}" rel="stylesheet">
+
+
+    {% block extrastyle %}{% endblock %}
+    {% block extrahead %}{% endblock %}
+    {% block blockbots %}
+        <meta name="robots" content="NONE,NOARCHIVE">
+    {% endblock %}
+</head>
+
+<body>
+
+    {% if user.is_authenticated %}
+        {% include "admin/sidebar.html" %}
+    {% endif %}
+
+    <main {% if user.is_authenticated %}class="content"{% endif %}>
+        {% if user.is_authenticated %}
+            <!-- Navbar -->
+            {% include "admin/navigation.html" %}
+            <!-- End Navbar -->
+
+            <!-- Breadcrumbs -->
+            {% if not is_popup and user.is_authenticated %}
+                {% block breadcrumbs %}
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+                        <div class="d-block mb-4 mb-md-0">
+                            <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                                <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                                    <li class="breadcrumb-item">
+                                        <a href="{% url 'admin:index' %}"><i class="fa fa-home"></i></a>
+                                    </li>
+                                    <li class="breadcrumb-item">{% if title %} &rsaquo; {{ title }}{% endif %}</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                {% endblock %}
+            {% endif %}
+            <!-- End Breadcrumbs -->
+        {% endif %}
+
+        <!-- Content -->
+        {% block content %}{% endblock %}
+        <!-- End Content -->
+
+        {% if user.is_authenticated %}
+            <!-- Sidebar -->
+            {% block sidebar %}{% endblock %}
+            <!-- End Sidebar -->
+
+            <!-- Footer -->
+            {% block footer %}
+                {% include "admin/footer.html" %}
+            {% endblock %}
+            <!-- End Footer -->
+        {% endif %}
+    </main>
+
+<!-- Core -->
+<script src="{% static 'admin_volt/assets/vendor/@popperjs/core/dist/umd/popper.min.js' %}"></script>
+<script src="{% static 'admin_volt/assets/vendor/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+
+<!-- Vendor JS -->
+<script src="{% static 'admin_volt/assets/vendor/onscreen/dist/on-screen.umd.min.js' %}"></script>
+
+<!-- Slider -->
+<script src="{% static 'admin_volt/assets/vendor/nouislider/distribute/nouislider.min.js' %}"></script>
+
+<!-- Smooth scroll -->
+<script src="{% static 'admin_volt/assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js' %}"></script>
+
+<!-- Charts -->
+<script src="{% static 'admin_volt/assets/vendor/chartist/dist/chartist.min.js' %}"></script>
+<script src="{% static 'admin_volt/assets/vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js' %}"></script>
+
+<!-- Datepicker -->
+<script src="{% static 'admin_volt/assets/vendor/vanillajs-datepicker/dist/js/datepicker.min.js' %}"></script>
+
+<!-- Sweet Alerts 2 -->
+<script src="{% static 'admin_volt/assets/vendor/sweetalert2/dist/sweetalert2.all.min.js' %}"></script>
+
+<!-- Moment JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+
+<!-- Vanilla JS Datepicker -->
+<script src="{% static 'admin_volt/assets/vendor/vanillajs-datepicker/dist/js/datepicker.min.js' %}"></script>
+
+<!-- Notyf -->
+<script src="{% static 'admin_volt/assets/vendor/notyf/notyf.min.js' %}"></script>
+
+<!-- Simplebar -->
+<script src="{% static 'admin_volt/assets/vendor/simplebar/dist/simplebar.min.js' %}"></script>
+
+<!-- Github buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- Volt JS -->
+<script src="{% static 'admin_volt/assets/js/volt.js' %}"></script>
+<script src="{% static 'admin_volt/assets/js/scripts.js' %}"></script>
+<script src="https://kit.fontawesome.com/4fd3baa9fc.js" crossorigin="anonymous"></script>
+
+<script>
+    {% if messages %}
+        {% for message in messages %}
+            notification['{{ message.tags }}']("<p class='{{ direction.panel }}'>" + '{{ message|capfirst }}' + "</p>", 'top', '{{ direction.notify }}');
+        {% endfor %}
+    {% endif %}
+</script>
+
+{% block extrascript %}{% endblock %}
+</body>
+</html>

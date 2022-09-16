@@ -11,18 +11,19 @@ class Type(models.Model):
 
 
 class Company(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, null=False)
     city = models.CharField(max_length=100)
     email = models.CharField(max_length=30, null=True)
     logo = models.ImageField(upload_to='publisher-logo', null=True)
+    # type = models.ForeignKey(Type, null=False)
 
     def __str__(self): 
         return self.name
 
 
 class ComputerSparePart(models.Model):
-    name = models.CharField(max_length=80)
-    description = models.CharField(max_length=1000)
+    name = models.CharField(max_length=80, null=False)
+    description = models.CharField(max_length=1000, null=False)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     #image = models.ImageField(upload_to='CSP-images', null=True)
     created_date = models.DateTimeField(auto_now=True)
@@ -102,7 +103,7 @@ class Sales(models.Model):
     to_date = models.DateField(auto_now=True)
 
     def __str__(self):
-        return self.title
+        return f"{self.title} {self.percent} {self.description} {self.from_date} {self.to_date}"
 
 
 class Clients(models.Model):
@@ -114,7 +115,6 @@ class Clients(models.Model):
 
 
 class Basket(models.Model):
-    #{'model': 'CPU', 'id': 22}
     computer_spare_part = models.ForeignKey(ComputerSparePart, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     count = models.IntegerField(default=0)

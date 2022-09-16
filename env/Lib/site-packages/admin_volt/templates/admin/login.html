@@ -1,0 +1,108 @@
+{% extends 'admin/base-fullscreen.html' %}
+{% load i18n static admin_volt %}
+
+{% block title %} Sign IN {% endblock %}
+
+{% block content %}
+
+    <main>
+        <section class="vh-lg-100 mt-5 mt-lg-0 bg-soft d-flex align-items-center">
+            <div class="container">
+                <div class="row justify-content-center form-bg-image"
+                     data-background-lg="{% static 'admin_volt/assets/img/illustrations/signin.svg' %}">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="bg-white shadow border-0 rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                            <div class="text-center text-md-center mb-4 mt-md-0">
+                                <h1 class="mb-0 h3">Sign IN</h1>
+                                <br>
+                                <p>Add your credentials</p>
+                            </div>
+                            <form method="post" action="{{ app_path }}" class="mt-4">
+                                {% csrf_token %}
+
+                                <!-- Form -->
+                                <div class="form-group mb-4">
+                                    <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <span class="fas fa-user-circle"></span>
+                                        </span>
+                                        <input type="text" name="{{ form.username.name }}"
+                                               placeholder="{{ form.password.label }}"
+                                               class="form-control" required id="{{ form.username.id_for_label }}">
+                                    </div>
+                                </div>
+                                <!-- End of Form -->
+                                <div class="form-group">
+                                    <!-- Form -->
+                                    <div class="form-group mb-4">
+                                        <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="basic-addon2">
+                                                <span class="fas fa-unlock-alt"></span>
+                                            </span>
+                                            <input type="password" name="{{ form.password.name }}"
+                                                   placeholder="{{ form.password.label }}"
+                                                   class="form-control" required id="{{ form.password.id_for_label }}">
+                                        </div>
+                                    </div>
+                                    <!-- End of Form -->
+                                    <div class="d-flex justify-content-between align-items-top mb-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="remember">
+                                            <label class="form-check-label mb-0" for="remember">
+                                                Remember me
+                                            </label>
+                                        </div>
+
+                                        <div>
+                                            {% url 'admin_password_reset' as password_reset_url %}
+                                            {% if password_reset_url %}
+                                                <a href="{{ password_reset_url }}" class="small text-right">{% trans 'Forgotten your password or username?' %}</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" name="login" class="btn btn-gray-800">Sign IN</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% endblock content %}
+
+{% block extrascript %}
+    <script type="application/javascript">
+        {% if form.username.errors %}
+            notification.danger("{{ form.username.errors }}", 'top', 'right');
+        {% endif %}
+        {% if form.password.errors %}
+            notification.danger("{{ form.password.errors }}", 'top', 'right');
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            var msg = "You are authenticated as {{ username }}, but are not authorized to " +
+                "access this page.Would you like to login to a different account ?"
+            notification.warning(msg, 'top', 'right');
+        {% endif %}
+
+        {% if form.errors and not form.non_field_errors %}
+            {% if form.errors.items|length == 1 %}
+                notification.warning("{% trans "Please correct the error below." %}", 'top', 'right');
+            {% else %}
+                notification.warning("{% trans "Please correct the errors below." %}", 'top', 'right');
+            {% endif %}
+        {% endif %}
+
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                notification.warning("{{ error|clean_text }}", 'top', 'right');
+            {% endfor %}
+        {% endif %}
+    </script>
+{% endblock %}
