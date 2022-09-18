@@ -12,7 +12,7 @@ class Type(models.Model):
 
 class Company(models.Model):
     name = models.CharField(max_length=200, null=False)
-    city = models.CharField(max_length=100)
+    city = models.CharField(max_length=100, null=True)
     email = models.CharField(max_length=30, null=True)
     logo = models.ImageField(upload_to='publisher-logo', null=True)
     # type = models.ForeignKey(Type, null=False)

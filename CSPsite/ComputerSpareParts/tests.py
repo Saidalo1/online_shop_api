@@ -1,3 +1,88 @@
 from django.test import TestCase
-
+from .models import *
 # Create your tests here.
+
+class TypeTestCase(TestCase):
+    def setUp(self):
+        self.type = Type.objects.create(name="Prootsessor")
+
+    def test_type_count_and_create(self):
+        type = Type.objects.all()
+        self.assertEqual(len(type), 1)
+        self.assertEqual(self.type, type[0])
+    
+    def test_update_type(self):
+        self.type.name = "Bunyodkor"
+        self.type.save()
+
+        type = Type.objects.first()
+        self.assertEqual(self.type, type)
+    
+    def test_delete(self):
+        self.type.delete()
+
+        type = Type.objects.all()
+        self.assertEqual(len(type), 0)
+
+
+class CompanyTestCase(TestCase):
+    def setUp(self):
+        self.company = Company.objects.create(name="AMDD")
+
+    def test_company_count_and_create(self):
+        company = Company.objects.all()
+        self.assertEqual(len(company), 1)
+        self.assertEqual(self.company, company[0])
+    
+    def test_update_company(self):
+        self.company.name = "Bunyodkor"
+        self.company.save()
+
+        company = Company.objects.first()
+        self.assertEqual(self.company, company)
+    
+    def test_delete(self):
+        self.company.delete()
+
+        company = Company.objects.all()
+        self.assertEqual(len(company), 0)
+
+
+class ComputerSparePartTestCase(TestCase):
+    def setUp(self):
+        type = Type.objects.create(name="Prootsessor")
+        company = Company.objects.create(name="AMDD")
+
+        self.computersparepart = ComputerSparePart.objects.create(
+            name = "Intel",
+            description = "zor",
+            company_id = [company.id],
+            type_id = [type.id],
+            cores = "16",
+            flow = "24",
+            ghz = "5.2",
+            processor_series = '',
+            graphics_processing_unit = '',
+            graphics_processing_unit_frequency = '',
+            video_memory_type = '',
+            count = "59",
+        )
+
+    def test_computersparepart_count_and_create(self):
+        computersparepart = ComputerSparePart.objects.all()
+        self.assertEqual(len(computersparepart), 1)
+        self.assertEqual(self.computersparepart, computersparepart[0])
+    
+    def test_update_computersparepart(self):
+        self.computersparepart.name = "AMD"
+        self.computersparepart.save()
+
+        computersparepart = ComputerSparePart.objects.first()
+        self.assertEqual(self.computersparepart, computersparepart)
+    
+    def test_delete(self):
+        self.computersparepart.delete()
+
+        computersparepart = ComputerSparePart.objects.all()
+        self.assertEqual(len(computersparepart), 0)
+

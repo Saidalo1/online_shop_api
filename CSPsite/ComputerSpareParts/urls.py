@@ -4,7 +4,7 @@ from rest_framework import routers
 
 router = routers.SimpleRouter()
 router.register(r'ComputerSparePart', ComputerSparePartsViewSet)
-router.register(r'CSPImages', CSPImagesViewSet)
+router.register(r'Images', CSPImagesViewSet)
 router.register(r'Company', CompanyViewSet)
 router.register(r'Types', TypesViewSet)
 router.register(r'Rating', RatingViewSet)
