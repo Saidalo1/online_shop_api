@@ -1,4 +1,4 @@
-from django.urls import path
+#from django.urls import path
 from .views import *
 from rest_framework import routers
 
@@ -17,8 +17,4 @@ router.register(r'Payments', PaymentsViewSet)
 router.register(r'Party', PartyViewSet)
 
 urlpatterns = [
-    path('', index, name='index'),
-    path('login/', login_view, name='login'),
-    path('logout/', logout_request, name='logout'),
-    path('register/', register_view, name='register'),
 ] + router.urls

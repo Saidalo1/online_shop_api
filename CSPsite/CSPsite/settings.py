@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -147,3 +148,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = 'media/'
+
+SITE_ID = 2
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '441953523840-t9i8ljmtmsl4qdiho12sumpfcpdoakaf.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    }
+}
