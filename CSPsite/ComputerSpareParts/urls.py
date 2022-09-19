@@ -1,10 +1,10 @@
-from django.urls import path, include
+#from django.urls import path
 from .views import *
 from rest_framework import routers
 
 router = routers.SimpleRouter()
 router.register(r'ComputerSparePart', ComputerSparePartsViewSet)
-router.register(r'CSPImages', CSPImagesViewSet)
+router.register(r'Images', CSPImagesViewSet)
 router.register(r'Company', CompanyViewSet)
 router.register(r'Types', TypesViewSet)
 router.register(r'Rating', RatingViewSet)
@@ -17,8 +17,4 @@ router.register(r'Payments', PaymentsViewSet)
 router.register(r'Party', PartyViewSet)
 
 urlpatterns = [
-    path('', index, name='index'),
-    path('login/', login_view, name='login'),
-    path('logout/', logout_request, name='logout'),
-    path('register/', register_view, name='register'),
 ] + router.urls

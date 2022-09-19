@@ -1,42 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
 
 {% block title %}
     VIRUSES
-{% endblock %}
-
-{% block css_styles %}
-<link rel="stylesheet" href="{% static 'css/search_filter_css.css'%}" type="text/css">
-{% endblock %}
-
-{% block scripts %}
-<script src="{% static 'js/poisk_filter_button.js' %}"></script>
-{% endblock %}
-
-{% block content %}
-    <br>
-    {% if user.is_superuser %}
-    <div class="Add_virus_div">
-    <a href="{% url 'add-Virus' %}" class="Add_virus">Add virus</a>
-    </div>
-    {% endif %}
-    <div class="container3">
-        <form action="" method="get">
-        <input type="text" maxlength= "12" placeholder="Search" class="searchbar" name="name__icontains">
-        <input type="image" src="\media\virus-images\poisk.png" alt="Submit Form" class="button"/>
-        <div class="toggle">
-            <div class="content"> <input type="checkbox" name="date__range">Filter_by_date_create</div>
-            <a class="toggler">Filter</a>
-        </div>
-    </form>
-    </div>
-    {% for item in Virus %}
-        <div class="Virus_nomi" style="border-bottom: 1px solid #000; padding-top: 50px;">
-            <img src="{{item.image.url}}" style="width: 20%;"/> <br>
-            <a href="{% url 'view-Virus' item.id %}">{{item}}</a>
-
-            <p>{{item.description|truncatewords:30}}</p>
-            <br>
-        </div>
-    {% endfor %}    
 {% endblock %}

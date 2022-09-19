@@ -12,7 +12,7 @@ class Type(models.Model):
 
 class Company(models.Model):
     name = models.CharField(max_length=200, null=False)
-    city = models.CharField(max_length=100)
+    city = models.CharField(max_length=100, null=True)
     email = models.CharField(max_length=30, null=True)
     logo = models.ImageField(upload_to='publisher-logo', null=True)
     # type = models.ForeignKey(Type, null=False)
@@ -101,6 +101,7 @@ class Sales(models.Model):
     description = models.TextField(max_length=1000)
     from_date = models.DateField(auto_now=True)
     to_date = models.DateField(auto_now=True)
+    computersparepart = models.ForeignKey(ComputerSparePart, on_delete=models.CASCADE, null=False)
 
     def __str__(self):
         return f"{self.title} {self.percent} {self.description} {self.from_date} {self.to_date}"
@@ -108,7 +109,7 @@ class Sales(models.Model):
 
 class Clients(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=15)
+    phone_number = models.CharField(max_length=15, null=False)
 
     def __str__(self):
         return f"{self.user}"
