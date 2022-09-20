@@ -3,6 +3,7 @@ from rest_framework.pagination import PageNumberPagination
 from .serializers import *
 from .models import *
 from rest_framework import filters
+from rest_framework.response import Response
 
 
 class ComputerSparePartsViewSet(viewsets.ModelViewSet):
@@ -18,9 +19,12 @@ class ComputerSparePartsViewSet(viewsets.ModelViewSet):
         if request.method == "POST":
             if request.POST.get("type") != "2":
                 if request.POST.get("processor_series") == '' and request.POST.get("graphics_processing_unit") == '' and request.POST.get("graphics_processing_unit_frequency") == '' and request.POST.get("video_memory_type") == '':
+                    print(super().create(request, *args, **kwargs))
                     return super().create(request, *args, **kwargs)
                 else:
-                    pass
+                    return Response({
+                        
+                    }, status=406)
 
 class CSPImagesViewSet(viewsets.ModelViewSet):
     queryset = Images.objects.all()
