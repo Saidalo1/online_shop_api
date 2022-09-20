@@ -3,6 +3,13 @@ from rest_framework.pagination import PageNumberPagination
 from .serializers import *
 from .models import *
 from rest_framework import filters
+from rest_framework.response import Response
+from rest_framework.permissions import BasePermission, IsAdminUser, SAFE_METHODS
+
+
+class ReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        return request.method in SAFE_METHODS
 
 
 class ComputerSparePartsViewSet(viewsets.ModelViewSet):
@@ -13,14 +20,21 @@ class ComputerSparePartsViewSet(viewsets.ModelViewSet):
     search_fields = ['name', 'description']
     filterset_fields = ['name', 'description']
     ordering_fields = ['name', 'description']
+    permission_classes = [IsAdminUser|ReadOnly]
 
     def create(self, request, *args, **kwargs):
         if request.method == "POST":
             if request.POST.get("type") != "2":
-                if request.POST.get("processor_series") == '' and request.POST.get("graphics_processing_unit") == '' and request.POST.get("graphics_processing_unit_frequency") == '' and request.POST.get("video_memory_type") == '':
-                    return super().create(request, *args, **kwargs)
+                if request.POST.get("processor_series") != '':
+                    return Response({'processor_series не должен быть пустым'}, status=406)
+                elif request.POST.get("graphics_processing_unit") != '': 
+                    return Response({'graphics_processing_unit не должен быть пустым \n'}, status=406)
+                elif request.POST.get("graphics_processing_unit_frequency") != '':
+                    return Response({'graphics_processing_unit_frequency не должен быть пустым \n'}, status=406)
+                elif request.POST.get("video_memory_type") != '':
+                    return Response({'video_memory_type не должен быть пустым \n'}, status=406)
                 else:
-                    pass
+                    return super().create(request, *args, **kwargs)
 
 class CSPImagesViewSet(viewsets.ModelViewSet):
     queryset = Images.objects.all()

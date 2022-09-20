@@ -19,7 +19,7 @@ http://www.tooplate.com/view/2092-shelf
                             {% if user.is_authenticated %}
                             <li class="nav-item"><a class="nav-link" href="">{{ user.get_username }}</a></li>
                             {% else %}
-                                <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
+                                <li class="nav-item"><a class="nav-link" href="accounts/login">Login</a></li>
                             {% endif %}
             
             {% block content %}
