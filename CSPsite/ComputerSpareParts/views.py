@@ -5,6 +5,7 @@ from .models import *
 from rest_framework import filters
 from rest_framework.response import Response
 from rest_framework.permissions import BasePermission, IsAdminUser, SAFE_METHODS
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class ReadOnly(BasePermission):
@@ -16,10 +17,10 @@ class ComputerSparePartsViewSet(viewsets.ModelViewSet):
     queryset = ComputerSparePart.objects.all()
     serializer_class = CSPSerializer
     pagination_class = PageNumberPagination
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     search_fields = ['name', 'description']
-    filterset_fields = ['name', 'description']
-    ordering_fields = ['name', 'description']
+    filterset_fields = '__all__'
+    ordering_felds = '__all__'
     permission_classes = [IsAdminUser|ReadOnly]
 
     def create(self, request, *args, **kwargs):

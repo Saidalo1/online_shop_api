@@ -58,7 +58,7 @@ class ComputerSparePartTestCase(TestCase):
             description = "zor",
             company = company,
             type = type,
-            сores = 16,
+            cores = 16,
             flow = "24",
             ghz = "5.2",
             processor_series = '',
