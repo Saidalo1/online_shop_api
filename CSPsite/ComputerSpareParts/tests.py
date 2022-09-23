@@ -27,7 +27,7 @@ class TypeTestCase(TestCase):
 
 class CompanyTestCase(TestCase):
     def setUp(self):
-        self.company = Company.objects.create(name="AMDD")
+        self.company = Company.objects.create(name="AMDD", city="Tashkent", email='newboy.secret@mail.ru')
 
     def test_company_count_and_create(self):
         company = Company.objects.all()
@@ -36,6 +36,8 @@ class CompanyTestCase(TestCase):
     
     def test_update_company(self):
         self.company.name = "Bunyodkor"
+        self.company.city = "Toshkent"
+        self.email = "super.saydalo@mail.ru"
         self.company.save()
 
         company = Company.objects.first()
@@ -52,7 +54,7 @@ class CompanyTestCase(TestCase):
 class ComputerSparePartTestCase(TestCase):
     def setUp(self):
         type = Type.objects.create(name="Prootsessor")
-        company = Company.objects.create(name="AMDD")
+        company = Company.objects.create(name="AMDD", city="Tashkent", email='111')
 
         self.computersparepart = ComputerSparePart.objects.create(
             name = "Intel",
@@ -116,8 +118,25 @@ class ClientsTestCase(TestCase):
 
 class RatingTestCase(TestCase):
     def setUp(self):
+        type = Type.objects.create(name="Prootsessor")
+        company = Company.objects.create(name="AMDD", city="Tashkent", email='111')
+        computersparepart = ComputerSparePart.objects.create(
+            name = "Intel",
+            description = "zor",
+            company = company,
+            type = type,
+            cores = 16,
+            flow = "24",
+            ghz = "5.2",
+            processor_series = '',
+            graphics_processing_unit = '',
+            graphics_processing_unit_frequency = '',
+            video_memory_type = '',
+            count = "59",
+        )
         user = User.objects.create(username="User", password="123321")
-        self.rating = Rating.objects.create(user=user, phone_number='+998798442753')
+        
+        self.rating = Rating.objects.create(rating = 1, user=user, computersparepart=computersparepart)
 
     def test_rating_count_and_create(self):
         rating = Rating.objects.all()

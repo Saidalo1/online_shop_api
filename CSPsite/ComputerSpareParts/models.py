@@ -13,7 +13,7 @@ class Type(models.Model):
 class Company(models.Model):
     name = models.CharField(max_length=200, null=False)
     city = models.CharField(max_length=100, null=True)
-    email = models.CharField(max_length=30, null=True)
+    email = models.EmailField(max_length=30, null=True)
     logo = models.ImageField(upload_to='publisher-logo', null=True)
     # type = models.ForeignKey(Type, null=False)
 
@@ -30,7 +30,7 @@ class ComputerSparePart(models.Model):
     type = models.ForeignKey(Type, on_delete=models.CASCADE, null=False)
     #rating = models.ForeignKey(Rating, on_delete=models.PROTECT)
     #sale = models.BooleanField(Sales, default=False)
-    сores = models.IntegerField(default=0,
+    cores = models.IntegerField(default=0,
         validators=[
             MaxValueValidator(255),
             MinValueValidator(1)
