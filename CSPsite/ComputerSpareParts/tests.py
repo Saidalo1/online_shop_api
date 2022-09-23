@@ -48,6 +48,7 @@ class CompanyTestCase(TestCase):
         self.assertEqual(len(company), 0)
 
 
+
 class ComputerSparePartTestCase(TestCase):
     def setUp(self):
         type = Type.objects.create(name="Prootsessor")
@@ -73,39 +74,65 @@ class ComputerSparePartTestCase(TestCase):
         self.assertEqual(len(computersparepart), 1)
         self.assertEqual(self.computersparepart, computersparepart[0])
     
-#     def test_update_computersparepart(self):
-#         self.computersparepart.name = "AMD"
-#         self.computersparepart.save()
+    def test_update_computersparepart(self):
+        self.computersparepart.name = "AMD"
+        self.computersparepart.save()
 
-#         computersparepart = ComputerSparePart.objects.first()
-#         self.assertEqual(self.computersparepart, computersparepart)
+        computersparepart = ComputerSparePart.objects.first()
+        self.assertEqual(self.computersparepart, computersparepart)
     
-#     def test_delete(self):
-#         self.computersparepart.delete()
+    def test_delete(self):
+        self.computersparepart.delete()
 
-#         computersparepart = ComputerSparePart.objects.all()
-#         self.assertEqual(len(computersparepart), 0)
+        computersparepart = ComputerSparePart.objects.all()
+        self.assertEqual(len(computersparepart), 0)
 
 
-# class ClientsTestCase(TestCase):
-#     def setUp(self):
-#         user = User.objects.create(username="User", password="123321")
-#         self.client = Clients.objects.create(user=[user.id], phone_number='+998798442753')
 
-#     def test_client_count_and_create(self):
-#         client = Clients.objects.all()
-#         self.assertEqual(len(client), 1)
-#         self.assertEqual(self.client, client[0])
+class ClientsTestCase(TestCase):
+    def setUp(self):
+        user = User.objects.create(username="User", password="123321")
+        self.client = Clients.objects.create(user=user, phone_number='+998798442753')
+
+    def test_client_count_and_create(self):
+        client = Clients.objects.all()
+        self.assertEqual(len(client), 1)
+        self.assertEqual(self.client, client[0])
     
-#     def test_update_client(self):
-#         self.client.phone_number = "+998998442753"
-#         self.client.save()
+    def test_update_client(self):
+        self.client.phone_number = "+998998442753"
+        self.client.save()
 
-#         client = Clients.objects.first()
-#         self.assertEqual(self.client, client)
+        client = Clients.objects.first()
+        self.assertEqual(self.client, client)
     
-#     def test_delete(self):
-#         self.client.delete()
+    def test_delete(self):
+        self.client.delete()
 
-#         client = Clients.objects.all()
-#         self.assertEqual(len(client), 0)
+        client = Clients.objects.all()
+        self.assertEqual(len(client), 0)
+
+
+
+class RatingTestCase(TestCase):
+    def setUp(self):
+        user = User.objects.create(username="User", password="123321")
+        self.rating = Rating.objects.create(user=user, phone_number='+998798442753')
+
+    def test_rating_count_and_create(self):
+        rating = Rating.objects.all()
+        self.assertEqual(len(rating), 1)
+        self.assertEqual(self.rating, rating[0])
+    
+    def test_update_rating(self):
+        self.rating.phone_number = "+998998442753"
+        self.rating.save()
+
+        rating = Rating.objects.first()
+        self.assertEqual(self.rating, rating)
+    
+    def test_delete(self):
+        self.rating.delete()
+
+        rating = Rating.objects.all()
+        self.assertEqual(len(rating), 0)
