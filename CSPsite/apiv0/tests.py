@@ -50,7 +50,6 @@ class CompanyTestCase(TestCase):
         self.assertEqual(len(company), 0)
 
 
-
 class ComputerSparePartTestCase(TestCase):
     def setUp(self):
         type = Type.objects.create(name="Prootsessor")
@@ -90,7 +89,6 @@ class ComputerSparePartTestCase(TestCase):
         self.assertEqual(len(computersparepart), 0)
 
 
-
 class ClientsTestCase(TestCase):
     def setUp(self):
         user = User.objects.create(username="User", password="123321")
@@ -113,7 +111,6 @@ class ClientsTestCase(TestCase):
 
         client = Clients.objects.all()
         self.assertEqual(len(client), 0)
-
 
 
 class RatingTestCase(TestCase):
