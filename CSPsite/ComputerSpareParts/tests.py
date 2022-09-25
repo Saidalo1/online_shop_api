@@ -136,7 +136,7 @@ class RatingTestCase(TestCase):
         )
         user = User.objects.create(username="User", password="123321")
         
-        self.rating = Rating.objects.create(rating = 1, user=user, computersparepart=computersparepart)
+        self.rating = Rating.objects.create(rating = 1, user=user, computer_spare_part=computersparepart)
 
     def test_rating_count_and_create(self):
         rating = Rating.objects.all()
@@ -144,7 +144,7 @@ class RatingTestCase(TestCase):
         self.assertEqual(self.rating, rating[0])
     
     def test_update_rating(self):
-        self.rating.phone_number = "+998998442753"
+        self.rating.rating = 10
         self.rating.save()
 
         rating = Rating.objects.first()
