@@ -50,7 +50,6 @@ class CompanyTestCase(TestCase):
         self.assertEqual(len(company), 0)
 
 
-
 class ComputerSparePartTestCase(TestCase):
     def setUp(self):
         type = Type.objects.create(name="Prootsessor")
@@ -136,7 +135,7 @@ class RatingTestCase(TestCase):
         )
         user = User.objects.create(username="User", password="123321")
         
-        self.rating = Rating.objects.create(rating = 1, user=user, computersparepart=computersparepart)
+        self.rating = Rating.objects.create(user=user, computer_spare_part=computersparepart, rating = 1)
 
     def test_rating_count_and_create(self):
         rating = Rating.objects.all()
@@ -144,7 +143,7 @@ class RatingTestCase(TestCase):
         self.assertEqual(self.rating, rating[0])
     
     def test_update_rating(self):
-        self.rating.phone_number = "+998998442753"
+        self.rating.rating = "5"
         self.rating.save()
 
         rating = Rating.objects.first()
@@ -155,3 +154,27 @@ class RatingTestCase(TestCase):
 
         rating = Rating.objects.all()
         self.assertEqual(len(rating), 0)
+
+
+class CommentsTestCase(TestCase):
+    def setUp(self):
+        user = User.objects.create(username="User", password="123321")
+        self.comment = Comments.objects.create(user=user, phone_number='+998798442753')
+
+    def test_comment_count_and_create(self):
+        comment = Comments.objects.all()
+        self.assertEqual(len(comment), 1)
+        self.assertEqual(self.comment, comment[0])
+    
+    def test_update_comment(self):
+        self.comment.phone_number = "+998998442753"
+        self.comment.save()
+
+        comment = Comments.objects.first()
+        self.assertEqual(self.comment, comment)
+    
+    def test_delete(self):
+        self.comment.delete()
+
+        comment = Comments.objects.all()
+        self.assertEqual(len(comment), 0)

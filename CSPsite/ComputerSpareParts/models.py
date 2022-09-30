@@ -71,7 +71,7 @@ class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     computer_spare_part = models.ForeignKey(ComputerSparePart, on_delete=models.CASCADE)
 
-    def __init__(self):
+    def __str__(self):
         return f"{self.user} {self.computer_spare_part} {self.rating}"
 
 
@@ -81,7 +81,7 @@ class Comments(models.Model):
     computer_spare_part = models.ForeignKey(ComputerSparePart, on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now=True)
 
-    def __init__(self):
+    def __str__(self):
         return f"{self.computer_spare_part} {self.user} {self.text} {self.created_date}"
 
 
