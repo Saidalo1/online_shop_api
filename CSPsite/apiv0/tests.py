@@ -89,7 +89,6 @@ class ComputerSparePartTestCase(TestCase):
         self.assertEqual(len(computersparepart), 0)
 
 
-
 class ClientsTestCase(TestCase):
     def setUp(self):
         user = User.objects.create(username="User", password="123321")
@@ -114,7 +113,6 @@ class ClientsTestCase(TestCase):
         self.assertEqual(len(client), 0)
 
 
-
 class RatingTestCase(TestCase):
     def setUp(self):
         type = Type.objects.create(name="Prootsessor")
@@ -135,7 +133,11 @@ class RatingTestCase(TestCase):
         )
         user = User.objects.create(username="User", password="123321")
         
+<<<<<<< HEAD:CSPsite/ComputerSpareParts/tests.py
         self.rating = Rating.objects.create(user=user, computer_spare_part=computersparepart, rating = 1)
+=======
+        self.rating = Rating.objects.create(rating = 1, user=user, computer_spare_part=computersparepart)
+>>>>>>> 8ce9eca7ba37e2dcc53701378ac4e7c1298e561b:CSPsite/apiv0/tests.py
 
     def test_rating_count_and_create(self):
         rating = Rating.objects.all()
@@ -143,7 +145,11 @@ class RatingTestCase(TestCase):
         self.assertEqual(self.rating, rating[0])
     
     def test_update_rating(self):
+<<<<<<< HEAD:CSPsite/ComputerSpareParts/tests.py
         self.rating.rating = "5"
+=======
+        self.rating.rating = 10
+>>>>>>> 8ce9eca7ba37e2dcc53701378ac4e7c1298e561b:CSPsite/apiv0/tests.py
         self.rating.save()
 
         rating = Rating.objects.first()

@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ComputersparepartsConfig(AppConfig):
+class apiv0Config(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'ComputerSpareParts'
+    name = 'apiv0'
