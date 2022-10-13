@@ -27,19 +27,6 @@ class ComputerSparePartsViewSet(viewsets.ModelViewSet):
     ordering_fields = '__all__'
     permission_classes = [IsAdminUser|ReadOnly]
 
-    def create(self, request, *args, **kwargs):
-        if request.method == "POST":
-            if request.POST.get("type") != "2":
-                if request.POST.get("processor_series") != '':
-                    return Response({'processor_series не должен быть пустым'}, status=406)
-                elif request.POST.get("graphics_processing_unit") != '': 
-                    return Response({'graphics_processing_unit не должен быть пустым \n'}, status=406)
-                elif request.POST.get("graphics_processing_unit_frequency") != '':
-                    return Response({'graphics_processing_unit_frequency не должен быть пустым \n'}, status=406)
-                elif request.POST.get("video_memory_type") != '':
-                    return Response({'video_memory_type не должен быть пустым \n'}, status=406)
-                else:
-                    return super().create(request, *args, **kwargs)
 
 class CSPImagesViewSet(viewsets.ModelViewSet):
     queryset = Images.objects.all()

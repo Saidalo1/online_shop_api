@@ -44,13 +44,8 @@ class ComputerSparePart(models.Model):
         validators=[
             MaxValueValidator(8.429),
             MinValueValidator(0)
-        ])
-    processor_series = models.CharField(max_length=300, null=True)#для видеокарты (пока что CharField)
-    graphics_processing_unit = models.CharField(max_length=300, null=True)#для видеокарты (пока что CharField)
-    graphics_processing_unit_frequency = models.CharField(max_length=300, null=True)#для видеокарты (пока что CharField)
-    video_memory_type = models.CharField(max_length=300, null=True)#для видеокарты (пока что CharField)
+        ])  
     count = models.IntegerField(default=0)
-
 
 
     class Meta:
@@ -59,6 +54,13 @@ class ComputerSparePart(models.Model):
     def __str__(self):
         return self.name
 
+
+class VideoCard(models.Model):
+    name = models.CharField(max_length=300, null=False)
+    processor_series = models.CharField(max_length=300)
+    graphics_processing_unit = models.CharField(max_length=300)
+    graphics_processing_unit_frequency = models.CharField(max_length=300)
+    video_memory_type = models.CharField(max_length=300)
 
 
 class Images(models.Model):
