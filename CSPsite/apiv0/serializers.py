@@ -11,6 +11,12 @@ class CSPImagesSerializer(serializers.ModelSerializer):
         model = Images
         fields = '__all__'
 
+
+class VideoCardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VideoCard
+        fields = '__all__'
+
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company

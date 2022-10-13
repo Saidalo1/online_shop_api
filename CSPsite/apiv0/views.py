@@ -34,6 +34,13 @@ class CSPImagesViewSet(viewsets.ModelViewSet):
     pagination_class = PageNumberPagination
 
 
+class VideoCardViewSet(viewsets.ModelViewSet):
+    queryset = VideoCard.objects.all()
+    serializer_class = VideoCardSerializer
+    pagination_class = PageNumberPagination
+    permission_classes = [IsAdminUser|ReadOnly]
+
+
 class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer

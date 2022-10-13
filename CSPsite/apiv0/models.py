@@ -62,6 +62,9 @@ class VideoCard(models.Model):
     graphics_processing_unit_frequency = models.CharField(max_length=300)
     video_memory_type = models.CharField(max_length=300)
 
+    def __str__(self):
+        return f"{self.name} {self.processor_series} {self.graphics_processing_unit} {self.graphics_processing_unit_frequency} {self.video_memory_type}"
+
 
 class Images(models.Model):
     image = models.ImageField(upload_to='CSP-images')

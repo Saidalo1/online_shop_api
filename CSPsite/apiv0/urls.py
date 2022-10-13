@@ -15,6 +15,7 @@ router.register(r'Basket', BasketViewSet)
 router.register(r'Orders', OrdersViewSet)
 router.register(r'Payments', PaymentsViewSet)
 router.register(r'Party', PartyViewSet)
+router.register(r'VideoCard', VideoCardViewSet)
 
 urlpatterns = [
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
