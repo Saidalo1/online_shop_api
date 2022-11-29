@@ -1,0 +1,1 @@
+from orders.models.computer_spare_part import CentralProcessingUnit, VideoCard

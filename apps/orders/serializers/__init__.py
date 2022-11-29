@@ -1,0 +1,1 @@
+from orders.serializers.computer_spare_part import CentralProcessingUnitModelSerializer, VideoCardModelSerializer
