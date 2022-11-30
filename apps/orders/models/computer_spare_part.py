@@ -1,13 +1,13 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.db.models import CASCADE, ForeignKey, SmallIntegerField, FloatField, IntegerField, Model, CharField
+from django.db.models import CASCADE, ForeignKey, SmallIntegerField, FloatField, IntegerField, Model, CharField, \
+    ImageField
 
 from orders.models.computer_spare_part_handbook import Type
-from shared.django import CSPBaseModel, TimeBaseModel
+from shared.django import CSPBaseModel, TimeBaseModel, SlugBaseModel
 
 
 # Processor
-class CentralProcessingUnit(CSPBaseModel, TimeBaseModel):
-    type = ForeignKey(Type, on_delete=CASCADE)
+class CentralProcessingUnit(CSPBaseModel, TimeBaseModel, SlugBaseModel):
     cores = SmallIntegerField(default=0,
                               validators=[
                                   MaxValueValidator(255),
@@ -24,20 +24,23 @@ class CentralProcessingUnit(CSPBaseModel, TimeBaseModel):
                          MinValueValidator(0)
                      ])
     count = IntegerField(default=0)
-
-    class Meta:
-        ordering = ('-created_at',)
+    image = ImageField(upload_to='cpu/image/default-image')
+    views = IntegerField(default=0)
 
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ('-created_at',)
 
-class VideoCard(Model):
-    name = CharField(max_length=300)
+
+class VideoCard(CSPBaseModel, TimeBaseModel, SlugBaseModel):
     processor_series = CharField(max_length=300)
     graphics_processing_unit = CharField(max_length=300)
     graphics_processing_unit_frequency = CharField(max_length=300)
     video_memory_type = CharField(max_length=300)
+    image = ImageField(upload_to='video-card/image/default-image')
+    views = IntegerField(default=0)
 
     def __str__(self):
         return self.name
