@@ -3,10 +3,10 @@ import os
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import IsAdminUser
 from rest_framework.viewsets import ModelViewSet
+from root.settings import BASE_DIR
 
 from orders.models import CentralProcessingUnit, VideoCard
 from orders.serializers import CentralProcessingUnitModelSerializer
-from root.settings import BASE_DIR
 from shared.django import ReadOnly
 
 
