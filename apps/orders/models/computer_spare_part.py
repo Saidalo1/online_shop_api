@@ -1,8 +1,7 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.db.models import CASCADE, ForeignKey, SmallIntegerField, FloatField, IntegerField, Model, CharField, \
+from django.db.models import SmallIntegerField, FloatField, IntegerField, CharField, \
     ImageField
 
-from orders.models.computer_spare_part_handbook import Type
 from shared.django import CSPBaseModel, TimeBaseModel, SlugBaseModel
 
 
