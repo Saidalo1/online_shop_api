@@ -29,11 +29,13 @@ INSTALLED_APPS = [
     # My apps
     'apps.orders.apps.OrdersConfig',
     'apps.shared',
+    'apps.users.apps.UsersConfig',
 
     # Third party apps
     'rest_framework',
     'django_filters',
     'drf_yasg',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +52,9 @@ ROOT_URLCONF = 'root.urls'
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
 }
 
 TEMPLATES = [
@@ -69,6 +74,7 @@ TEMPLATES = [
 ]
 WSGI_APPLICATION = 'root.wsgi.application'
 
+AUTH_USER_MODEL = 'users.User'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 

@@ -1,13 +1,12 @@
 import os
 
 from rest_framework.parsers import MultiPartParser
+from rest_framework.viewsets import ModelViewSet
 
 from orders.models import Type, Company, Images, Rating, Comments, Sales, Basket, Order, PaymentType, Payments
 from orders.serializers import TypeModelSerializer, CompanyModelSerializer, ImagesModelSerializer, \
     RatingModelSerializer, CommentsModelSerializer, SalesModelSerializer, BasketModelSerializer, OrderModelSerializer, \
     PaymentTypeModelSerializer, PaymentsModelSerializer
-from rest_framework.viewsets import ModelViewSet
-
 from root.settings import BASE_DIR
 
 

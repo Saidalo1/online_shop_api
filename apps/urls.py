@@ -24,4 +24,5 @@ urlpatterns = [
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('apiv1/', include('orders.urls')),
+    # path('account/', include('users.urls')),
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)

@@ -1,10 +1,10 @@
-from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import CASCADE, ForeignKey, PositiveIntegerField, Model, CharField, URLField, ImageField, \
     FloatField, IntegerField, Index, TextField, DateField
 
 from shared.django import SlugBaseModel, TimeBaseModel
+from users.models import User
 
 
 class Type(Model):
