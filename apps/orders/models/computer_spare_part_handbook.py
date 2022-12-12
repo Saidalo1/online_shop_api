@@ -1,6 +1,6 @@
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
-from django.db.models import CASCADE, ForeignKey, PositiveIntegerField, Model, CharField, URLField, ImageField, \
+from django.db.models import CASCADE, ForeignKey, PositiveIntegerField, Model, CharField, ImageField, \
     FloatField, IntegerField, Index, TextField, DateField
 
 from shared.django import SlugBaseModel, TimeBaseModel
@@ -16,8 +16,6 @@ class Type(Model):
 
 class Company(Model):
     name = CharField(max_length=200)
-    url = URLField(max_length=200)
-    logo = ImageField(upload_to='publisher-logo', null=True)
     type = ForeignKey(Type, CASCADE)
 
     def __str__(self):
@@ -54,7 +52,7 @@ class Rating(Model):
 
 class Comments(TimeBaseModel, SlugBaseModel):
     text = TextField(max_length=500)
-    user = ForeignKey(User, on_delete=CASCADE)
+    user = ForeignKey(User, CASCADE)
     content_type = ForeignKey(ContentType, CASCADE)
     object_id = PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')

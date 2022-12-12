@@ -1,5 +1,4 @@
-import os
-
+from rest_framework.generics import CreateAPIView
 from rest_framework.parsers import MultiPartParser
 from rest_framework.viewsets import ModelViewSet
 
@@ -7,7 +6,6 @@ from orders.models import Type, Company, Images, Rating, Comments, Sales, Basket
 from orders.serializers import TypeModelSerializer, CompanyModelSerializer, ImagesModelSerializer, \
     RatingModelSerializer, CommentsModelSerializer, SalesModelSerializer, BasketModelSerializer, OrderModelSerializer, \
     PaymentTypeModelSerializer, PaymentsModelSerializer
-from root.settings import BASE_DIR
 
 
 class TypeModelViewSet(ModelViewSet):
@@ -20,16 +18,22 @@ class CompanyModelViewSet(ModelViewSet):
     serializer_class = CompanyModelSerializer
 
 
-class ImagesModelViewSet(ModelViewSet):
+# class ImagesModelViewSet(ModelViewSet):
+#     queryset = Images.objects.all()
+#     serializer_class = ImagesModelSerializer
+#     parser_classes = (MultiPartParser,)
+#
+#     def destroy(self, request, *args, **kwargs):
+#         if Images.objects.get(id=kwargs.get('pk')):
+#             image_url = Images.objects.get(id=kwargs.get('pk')).image.url
+#             os.remove(BASE_DIR + image_url)
+#         return super().destroy(request, *args, **kwargs)
+
+
+class ImagesModelCreateAPIView(CreateAPIView):
     queryset = Images.objects.all()
     serializer_class = ImagesModelSerializer
     parser_classes = (MultiPartParser,)
-
-    def destroy(self, request, *args, **kwargs):
-        if Images.objects.get(id=kwargs.get('pk')).image.url:
-            image_url = Images.objects.get(id=kwargs.get('pk')).image.url
-            os.remove(BASE_DIR + image_url)
-        return super().destroy(request, *args, **kwargs)
 
 
 class RatingModelViewSet(ModelViewSet):
