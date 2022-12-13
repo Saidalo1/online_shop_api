@@ -2,10 +2,10 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.parsers import MultiPartParser
 from rest_framework.viewsets import ModelViewSet
 
-from orders.models import Type, Company, Images, Rating, Comments, Sales, Basket, Order, PaymentType, Payments
-from orders.serializers import TypeModelSerializer, CompanyModelSerializer, ImagesModelSerializer, \
+from orders.models import Type, Company, Images, Rating, Comments, Sales, Basket, Order, Payments
+from orders.serializers import TypeModelSerializer, CompanyModelSerializer, ImagesCreateModelSerializer, \
     RatingModelSerializer, CommentsModelSerializer, SalesModelSerializer, BasketModelSerializer, OrderModelSerializer, \
-    PaymentTypeModelSerializer, PaymentsModelSerializer
+    PaymentsModelSerializer
 
 
 class TypeModelViewSet(ModelViewSet):
@@ -32,7 +32,7 @@ class CompanyModelViewSet(ModelViewSet):
 
 class ImagesModelCreateAPIView(CreateAPIView):
     queryset = Images.objects.all()
-    serializer_class = ImagesModelSerializer
+    serializer_class = ImagesCreateModelSerializer
     parser_classes = (MultiPartParser,)
 
 
@@ -59,11 +59,6 @@ class BasketModelViewSet(ModelViewSet):
 class OrderModelViewSet(ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderModelSerializer
-
-
-class PaymentTypeModelViewSet(ModelViewSet):
-    queryset = PaymentType.objects.all()
-    serializer_class = PaymentTypeModelSerializer
 
 
 class PaymentsModelViewSet(ModelViewSet):

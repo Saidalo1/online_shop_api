@@ -23,7 +23,7 @@ class CentralProcessingUnit(CSPBaseModel, TimeBaseModel, SlugBaseModel):
                          MinValueValidator(0)
                      ])
     count = IntegerField(default=0)
-    image = ImageField(upload_to='cpu/image/default-image')
+    image = ImageField(upload_to=f'csp/images/%y/%m/%d/default-image')
     views = IntegerField(default=0)
 
     def __str__(self):
@@ -31,6 +31,7 @@ class CentralProcessingUnit(CSPBaseModel, TimeBaseModel, SlugBaseModel):
 
     class Meta:
         ordering = ('-created_at',)
+        db_table = 'cpu'
 
 
 class VideoCard(CSPBaseModel, TimeBaseModel, SlugBaseModel):
@@ -38,8 +39,12 @@ class VideoCard(CSPBaseModel, TimeBaseModel, SlugBaseModel):
     graphics_processing_unit = CharField(max_length=300)
     graphics_processing_unit_frequency = CharField(max_length=300)
     video_memory_type = CharField(max_length=300)
-    image = ImageField(upload_to='video-card/image/default-image')
+    image = ImageField(upload_to=f'csp/images/%y/%m/%d/default-image')
     views = IntegerField(default=0)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ('-created_at',)
+        db_table = 'video_card'

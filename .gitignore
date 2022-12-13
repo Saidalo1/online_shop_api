@@ -148,4 +148,5 @@ cython_debug/
 
 .idea/
 **/migrations/**
+**/__pycache__/**
 media/

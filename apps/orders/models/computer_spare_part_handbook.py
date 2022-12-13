@@ -1,7 +1,7 @@
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import CASCADE, ForeignKey, PositiveIntegerField, Model, CharField, ImageField, \
-    FloatField, IntegerField, Index, TextField, DateField
+    FloatField, IntegerField, Index, TextField, DateField, TextChoices
 
 from shared.django import SlugBaseModel, TimeBaseModel
 from users.models import User
@@ -13,6 +13,9 @@ class Type(Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        db_table = 'type'
+
 
 class Company(Model):
     name = CharField(max_length=200)
@@ -21,9 +24,12 @@ class Company(Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        db_table = 'company'
+
 
 class Images(Model):
-    image = ImageField(upload_to='CSP-images')
+    image = ImageField(upload_to='csp/images/%y/%m/%d/')
     content_type = ForeignKey(ContentType, CASCADE)
     object_id = PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
@@ -32,6 +38,7 @@ class Images(Model):
         indexes = [
             Index(fields=["content_type", "object_id"]),
         ]
+        db_table = 'images'
 
 
 class Rating(Model):
@@ -48,6 +55,7 @@ class Rating(Model):
         indexes = [
             Index(fields=["content_type", "object_id"]),
         ]
+        db_table = 'rating'
 
 
 class Comments(TimeBaseModel, SlugBaseModel):
@@ -64,6 +72,7 @@ class Comments(TimeBaseModel, SlugBaseModel):
         indexes = [
             Index(fields=["content_type", "object_id"]),
         ]
+        db_table = 'comments'
 
 
 class Sales(Model):
@@ -83,6 +92,7 @@ class Sales(Model):
         indexes = [
             Index(fields=["content_type", "object_id"]),
         ]
+        db_table = 'sales'
 
 
 class Basket(Model):
@@ -99,6 +109,7 @@ class Basket(Model):
         indexes = [
             Index(fields=["content_type", "object_id"]),
         ]
+        db_table = 'basket'
 
 
 class Order(Model):
@@ -121,20 +132,19 @@ class Order(Model):
         indexes = [
             Index(fields=["content_type", "object_id"]),
         ]
-
-
-class PaymentType(Model):
-    # 1-credit card
-    name = CharField(max_length=60)
+        db_table = 'order'
 
 
 class Payments(Model):
+    class PaymentType(TextChoices):
+        click = 'click'
+
     content_type = ForeignKey(ContentType, CASCADE)
     object_id = PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     user = ForeignKey(User, on_delete=CASCADE)
     amount = FloatField(default=0)
-    type = ForeignKey(PaymentType, on_delete=CASCADE)
+    type = CharField(PaymentType, max_length=85, choices=PaymentType.choices)
 
     def __str__(self):
         return f"{self.object_id} {self.user} {self.amount}"
@@ -143,3 +153,4 @@ class Payments(Model):
         indexes = [
             Index(fields=["content_type", "object_id"]),
         ]
+        db_table = 'payments'
