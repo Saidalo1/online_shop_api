@@ -5,10 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from orders.models import CentralProcessingUnit, VideoCard, Images
 from orders.serializers import CentralProcessingUnitModelSerializer, VideoCardModelSerializer
-from shared.django import ReadOnly, delete_main_photo
-
-
-from shared.django.functions import delete_all_photos
+from shared.django import ReadOnly, delete_main_photo, delete_all_photos
 
 
 class CentralProcessingUnitModelViewSet(ModelViewSet):

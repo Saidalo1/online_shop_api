@@ -2,16 +2,11 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models import SmallIntegerField, FloatField, IntegerField, CharField, \
     ImageField
 
-from shared.django import CSPBaseModel, TimeBaseModel, SlugBaseModel
-
-
-def upload_name(instance, filename):
-    return f'csp/images/%y/%m/%d/default-image/{instance.name}'
+from shared.django import CSPBaseModel, TimeBaseModel, SlugBaseModel, upload_name_cpu, upload_name_video_card
 
 
 # Processor
 class CentralProcessingUnit(CSPBaseModel, TimeBaseModel, SlugBaseModel):
-
     cores = SmallIntegerField(default=0,
                               validators=[
                                   MaxValueValidator(255),
@@ -28,7 +23,7 @@ class CentralProcessingUnit(CSPBaseModel, TimeBaseModel, SlugBaseModel):
                          MinValueValidator(0)
                      ])
     count = IntegerField(default=0)
-    image = ImageField(upload_to=upload_name)
+    image = ImageField(upload_to=upload_name_cpu)
     views = IntegerField(default=0)
 
     def __str__(self):
@@ -44,7 +39,7 @@ class VideoCard(CSPBaseModel, TimeBaseModel, SlugBaseModel):
     graphics_processing_unit = CharField(max_length=300)
     graphics_processing_unit_frequency = CharField(max_length=300)
     video_memory_type = CharField(max_length=300)
-    image = ImageField(upload_to=f'csp/images/%y/%m/%d/default-image')
+    image = ImageField(upload_to=upload_name_video_card)
     views = IntegerField(default=0)
 
     def __str__(self):
