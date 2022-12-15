@@ -21,5 +21,5 @@ router_v1.register('payment', PaymentsModelViewSet)
 
 urlpatterns = [
     path('', include(router_v1.urls)),
-    path('<str:content_type__model>/<int:object_id>/images/', ImagesModelCreateAPIView.as_view()),
+    path('images/<str:content_type__model>/<int:object_id>/', ImagesModelCreateAPIView.as_view()),
 ]

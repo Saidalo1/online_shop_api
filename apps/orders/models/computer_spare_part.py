@@ -5,8 +5,13 @@ from django.db.models import SmallIntegerField, FloatField, IntegerField, CharFi
 from shared.django import CSPBaseModel, TimeBaseModel, SlugBaseModel
 
 
+def upload_name(instance, filename):
+    return f'csp/images/%y/%m/%d/default-image/{instance.name}'
+
+
 # Processor
 class CentralProcessingUnit(CSPBaseModel, TimeBaseModel, SlugBaseModel):
+
     cores = SmallIntegerField(default=0,
                               validators=[
                                   MaxValueValidator(255),
@@ -23,7 +28,7 @@ class CentralProcessingUnit(CSPBaseModel, TimeBaseModel, SlugBaseModel):
                          MinValueValidator(0)
                      ])
     count = IntegerField(default=0)
-    image = ImageField(upload_to=f'csp/images/%y/%m/%d/default-image')
+    image = ImageField(upload_to=upload_name)
     views = IntegerField(default=0)
 
     def __str__(self):

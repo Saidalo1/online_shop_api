@@ -30,7 +30,7 @@ class ImagesCreateModelSerializer(ModelSerializer):
 
     def create(self, validated_data):
         model_name = self.context['request'].parser_context['kwargs']['content_type__model']
-        validated_data['content_type'].id = ContentType.objects.get(model=model_name).id
+        validated_data['content_type'] = ContentType.objects.get(model=model_name)
         model = apps.get_model('orders', model_name)
         validated_data['object_id'] = model.objects.get(id=validated_data['object_id']).id
         return super().create(validated_data)
