@@ -6,7 +6,7 @@ from shared.django import CSPBaseModel, TimeBaseModel, SlugBaseModel, upload_nam
 
 
 # Processor
-class CentralProcessingUnit(CSPBaseModel, TimeBaseModel, SlugBaseModel):
+class CentralProcessingUnit(SlugBaseModel, TimeBaseModel, CSPBaseModel):
     cores = SmallIntegerField(default=0,
                               validators=[
                                   MaxValueValidator(255),
@@ -34,7 +34,7 @@ class CentralProcessingUnit(CSPBaseModel, TimeBaseModel, SlugBaseModel):
         db_table = 'cpu'
 
 
-class VideoCard(CSPBaseModel, TimeBaseModel, SlugBaseModel):
+class VideoCard(SlugBaseModel, TimeBaseModel, CSPBaseModel):
     processor_series = CharField(max_length=300)
     graphics_processing_unit = CharField(max_length=300)
     graphics_processing_unit_frequency = CharField(max_length=300)

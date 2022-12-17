@@ -3,12 +3,11 @@ from rest_framework import routers
 
 from orders.views import TypeModelViewSet, CompanyModelViewSet, \
     RatingModelViewSet, CommentsModelViewSet, SalesModelViewSet, BasketModelViewSet, OrderModelViewSet, \
-    PaymentsModelViewSet, CentralProcessingUnitModelViewSet, VideoCardModelViewSet
-from orders.views.computer_spare_part_handbook import ImagesModelCreateAPIView
+    PaymentsModelViewSet, CentralProcessingUnitModelViewSet, VideoCardModelViewSet, ImagesModelListAPIView, \
+    ImagesModelCreateAPIView
 
 router_v1 = routers.SimpleRouter()
 router_v1.register('cpu', CentralProcessingUnitModelViewSet)
-# router_v1.register('images', ImagesModelViewSet)
 router_v1.register('company', CompanyModelViewSet)
 router_v1.register('types', TypeModelViewSet)
 router_v1.register('rating', RatingModelViewSet)
@@ -21,5 +20,6 @@ router_v1.register('payment', PaymentsModelViewSet)
 
 urlpatterns = [
     path('', include(router_v1.urls)),
-    path('images/', ImagesModelCreateAPIView.as_view()),
+    path('images/create', ImagesModelCreateAPIView.as_view()),
+    path('images/', ImagesModelListAPIView.as_view()),
 ]

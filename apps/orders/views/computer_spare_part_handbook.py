@@ -1,11 +1,11 @@
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.parsers import MultiPartParser
 from rest_framework.viewsets import ModelViewSet
 
 from orders.models import Type, Company, Images, Rating, Comments, Sales, Basket, Order, Payments
 from orders.serializers import TypeModelSerializer, CompanyModelSerializer, ImagesCreateModelSerializer, \
     RatingModelSerializer, CommentsModelSerializer, SalesModelSerializer, BasketModelSerializer, OrderModelSerializer, \
-    PaymentsModelSerializer
+    PaymentsModelSerializer, ImagesListModelSerializer
 
 
 class TypeModelViewSet(ModelViewSet):
@@ -18,22 +18,15 @@ class CompanyModelViewSet(ModelViewSet):
     serializer_class = CompanyModelSerializer
 
 
-# class ImagesModelViewSet(ModelViewSet):
-#     queryset = Images.objects.all()
-#     serializer_class = ImagesModelSerializer
-#     parser_classes = (MultiPartParser,)
-#
-#     def destroy(self, request, *args, **kwargs):
-#         if Images.objects.get(id=kwargs.get('pk')):
-#             image_url = Images.objects.get(id=kwargs.get('pk')).image.url
-#             os.remove(BASE_DIR + image_url)
-#         return super().destroy(request, *args, **kwargs)
-
-
 class ImagesModelCreateAPIView(CreateAPIView):
     queryset = Images.objects.all()
     serializer_class = ImagesCreateModelSerializer
     parser_classes = (MultiPartParser,)
+
+
+class ImagesModelListAPIView(ListAPIView):
+    queryset = Images.objects.all()
+    serializer_class = ImagesListModelSerializer
 
 
 class RatingModelViewSet(ModelViewSet):

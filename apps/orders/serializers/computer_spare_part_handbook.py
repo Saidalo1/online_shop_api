@@ -34,6 +34,12 @@ class ImagesCreateModelSerializer(ModelSerializer):
         exclude = ()
 
 
+class ImagesListModelSerializer(ModelSerializer):
+    class Meta:
+        model = Images
+        exclude = ()
+
+
 class RatingModelSerializer(ModelSerializer):
     class Meta:
         model = Rating

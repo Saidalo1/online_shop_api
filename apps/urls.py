@@ -5,5 +5,5 @@ from root.settings import MEDIA_URL, MEDIA_ROOT
 
 urlpatterns = [
       path('', include('orders.urls')),
-      # path('account/', include('users.urls')),
+      path('account/', include('users.urls')),
   ] + static(MEDIA_URL, document_root=MEDIA_ROOT)

@@ -1,15 +1,22 @@
 from django.db.models import CharField, SlugField, Model, DateTimeField
+from django.utils.text import slugify
 
 
 class SlugBaseModel(Model):
+    name = CharField(max_length=255)
     slug = SlugField(max_length=255, unique=True)
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        self.slug = slugify(self.name)
+        while self.__class__.objects.filter(slug=self.slug).exists():
+            self.slug += self.__class__.objects.count(slug=self.slug)
+        super().save(force_insert, force_update, using, update_fields)
 
     class Meta:
         abstract = True
 
 
 class CSPBaseModel(Model):
-    name = CharField(max_length=255)
     description = CharField(max_length=1000)
 
     class Meta:

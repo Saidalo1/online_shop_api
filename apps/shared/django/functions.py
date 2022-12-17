@@ -18,8 +18,8 @@ def delete_all_photos(model, object_pk, content_type_pk):
 
 
 def upload_name_cpu(instance, filename):
-    return f'csp/cpu/images/%y/%m/%d/default-image/{instance.id}'
+    return f'csp/cpu/images/%Y/%m/%d/default-image/{instance.slug}/{filename}'
 
 
 def upload_name_video_card(instance, filename):
-    return f'csp/video-card/images/%y/%m/%d/default-image/{instance.id}'
+    return f'csp/video-card/images/%y/%m/%d/default-image/{instance.slug}/{filename}'

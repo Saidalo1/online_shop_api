@@ -52,11 +52,13 @@ ROOT_URLCONF = 'root.urls'
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'shared.django.IsAdminUserOrReadOnly',
+    ],
     # 'DEFAULT_AUTHENTICATION_CLASSES': (
     #     'rest_framework_simplejwt.authentication.JWTAuthentication',
     # )
 }
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
