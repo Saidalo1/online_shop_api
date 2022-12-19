@@ -1,8 +1,10 @@
 from django.apps import apps
 from django.contrib.contenttypes.models import ContentType
+from rest_framework.fields import HiddenField, CurrentUserDefault
 from rest_framework.serializers import ModelSerializer, ValidationError
 
 from orders.models import Type, Company, Images, Rating, Comments, Sales, Basket, Order, Payments
+from shared.django import GetUserNameSerializer
 
 
 class TypeModelSerializer(ModelSerializer):
@@ -47,9 +49,16 @@ class RatingModelSerializer(ModelSerializer):
 
 
 class CommentsModelSerializer(ModelSerializer):
+    user = HiddenField(default=CurrentUserDefault())
+
+    def to_representation(self, instance):
+        represent = super().to_representation(instance)
+        represent['user'] = GetUserNameSerializer(instance.user).data
+        return represent
+
     class Meta:
         model = Comments
-        exclude = ()
+        exclude = ('slug',)
 
 
 class SalesModelSerializer(ModelSerializer):

@@ -6,6 +6,7 @@ from orders.models import Type, Company, Images, Rating, Comments, Sales, Basket
 from orders.serializers import TypeModelSerializer, CompanyModelSerializer, ImagesCreateModelSerializer, \
     RatingModelSerializer, CommentsModelSerializer, SalesModelSerializer, BasketModelSerializer, OrderModelSerializer, \
     PaymentsModelSerializer, ImagesListModelSerializer
+from shared.django import IsOwnerOrIsAdminOrReadOnly
 
 
 class TypeModelViewSet(ModelViewSet):
@@ -37,6 +38,7 @@ class RatingModelViewSet(ModelViewSet):
 class CommentsModelViewSet(ModelViewSet):
     queryset = Comments.objects.all()
     serializer_class = CommentsModelSerializer
+    permission_classes = (IsOwnerOrIsAdminOrReadOnly,)
 
 
 class SalesModelViewSet(ModelViewSet):
