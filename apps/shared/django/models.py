@@ -9,7 +9,7 @@ class SlugBaseModel(Model):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.slug = slugify(self.name)
         while self.__class__.objects.filter(slug=self.slug).exists():
-            self.slug += self.__class__.objects.count(slug=self.slug)
+            self.slug += f'{self.__class__.objects.filter(slug=self.slug).count()}'
         super().save(force_insert, force_update, using, update_fields)
 
     class Meta:
