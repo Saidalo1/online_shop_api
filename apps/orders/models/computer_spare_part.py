@@ -22,7 +22,6 @@ class CentralProcessingUnit(SlugBaseModel, TimeBaseModel, CSPBaseModel):
                          MaxValueValidator(8.429),
                          MinValueValidator(0)
                      ])
-    count = IntegerField(default=0)
     image = ImageField(upload_to=upload_name_cpu)
     views = IntegerField(default=0)
 

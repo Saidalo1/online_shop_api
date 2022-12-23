@@ -1,4 +1,6 @@
-from django.db.models import CharField, SlugField, Model, DateTimeField
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db.models import CharField, SlugField, Model, DateTimeField, IntegerField, FloatField
+from django.forms import DecimalField
 from django.utils.text import slugify
 
 
@@ -18,6 +20,12 @@ class SlugBaseModel(Model):
 
 class CSPBaseModel(Model):
     description = CharField(max_length=1000)
+    count = IntegerField(default=0)
+    price = FloatField(default=0,
+                       validators=[
+                           MaxValueValidator(100000000.00),
+                           MinValueValidator(0)
+                       ])
 
     class Meta:
         abstract = True

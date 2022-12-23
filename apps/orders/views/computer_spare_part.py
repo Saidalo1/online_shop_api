@@ -1,4 +1,6 @@
 from django.contrib.contenttypes.models import ContentType
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
 from rest_framework.parsers import MultiPartParser
 from rest_framework.viewsets import ModelViewSet
 
@@ -11,6 +13,9 @@ class CentralProcessingUnitModelViewSet(ModelViewSet):
     queryset = CentralProcessingUnit.objects.all()
     serializer_class = CentralProcessingUnitModelSerializer
     parser_classes = (MultiPartParser,)
+    filter_backends = (DjangoFilterBackend, SearchFilter)
+    filterset_fields = {'price': ['gte', 'lte']}
+    search_fields = ('name',)
 
     def destroy(self, request, *args, **kwargs):
         delete_main_photo(CentralProcessingUnit, kwargs['pk'])
@@ -23,6 +28,9 @@ class VideoCardModelViewSet(ModelViewSet):
     queryset = VideoCard.objects.all()
     serializer_class = VideoCardModelSerializer
     parser_classes = (MultiPartParser,)
+    filter_backends = (DjangoFilterBackend, SearchFilter)
+    filterset_fields = {'price': ['gte', 'lte']}
+    search_fields = ('name',)
 
     def destroy(self, request, *args, **kwargs):
         delete_main_photo(VideoCard, kwargs['pk'])

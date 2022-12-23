@@ -2,6 +2,8 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import CASCADE, ForeignKey, PositiveIntegerField, Model, CharField, ImageField, \
     FloatField, IntegerField, Index, TextField, DateField, TextChoices
+from mptt.fields import TreeForeignKey
+from mptt.models import MPTTModel
 
 from shared.django import SlugBaseModel, TimeBaseModel
 from users.models import User
@@ -58,15 +60,19 @@ class Rating(Model):
         db_table = 'rating'
 
 
-class Comments(TimeBaseModel, SlugBaseModel):
+class Comments(TimeBaseModel, SlugBaseModel, MPTTModel):
     text = TextField(max_length=500)
     user = ForeignKey(User, CASCADE)
+    parent = TreeForeignKey('self', CASCADE, 'children', null=True, blank=True)
     content_type = ForeignKey(ContentType, CASCADE)
     object_id = PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
 
     def __str__(self):
         return f"{self.object_id} {self.user} {self.text} {self.created_at}"
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
 
     class Meta:
         indexes = [

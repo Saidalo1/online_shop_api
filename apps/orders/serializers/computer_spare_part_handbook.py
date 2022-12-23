@@ -1,4 +1,3 @@
-from django.apps import apps
 from django.contrib.contenttypes.models import ContentType
 from rest_framework.fields import HiddenField, CurrentUserDefault
 from rest_framework.serializers import ModelSerializer, ValidationError
@@ -58,6 +57,13 @@ class CommentsModelSerializer(ModelSerializer):
     class Meta:
         model = Comments
         exclude = ('slug',)
+
+
+class CommentsListModelSerializer(ModelSerializer):
+
+    class Meta:
+        model = Comments
+        exclude = ()
 
 
 class SalesModelSerializer(ModelSerializer):
