@@ -45,7 +45,7 @@ class Images(Model):
 
 class Rating(Model):
     rating = IntegerField(default=0)
-    user = ForeignKey(User, on_delete=CASCADE)
+    user = ForeignKey(User, CASCADE)
     content_type = ForeignKey(ContentType, CASCADE)
     object_id = PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')

@@ -4,8 +4,7 @@ from rest_framework import routers
 from orders.views import TypeModelViewSet, CompanyModelViewSet, \
     RatingModelViewSet, CommentsModelViewSet, SalesModelViewSet, BasketModelViewSet, OrderModelViewSet, \
     PaymentsModelViewSet, CentralProcessingUnitModelViewSet, VideoCardModelViewSet, ImagesModelListAPIView, \
-    ImagesModelCreateAPIView, CommentsListAPIView
-
+    ImagesModelCreateAPIView, CommentsListAPIView, ImagesModelUpdateAPIView
 
 router_v1 = routers.SimpleRouter()
 router_v1.register('cpu', CentralProcessingUnitModelViewSet)
@@ -21,7 +20,13 @@ router_v1.register('payment', PaymentsModelViewSet)
 
 urlpatterns = [
     path('', include(router_v1.urls)),
+
+    # images
     path('images/create', ImagesModelCreateAPIView.as_view()),
+    path('images/<int:pk>/update', ImagesModelUpdateAPIView.as_view()),
     path('images/', ImagesModelListAPIView.as_view()),
+
+
+    # comments
     path('<str:model_name>/<int:object_pk>/comments', CommentsListAPIView.as_view()),
 ]

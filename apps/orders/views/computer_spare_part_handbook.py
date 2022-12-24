@@ -1,13 +1,13 @@
 from django.contrib.contenttypes.models import ContentType
 from rest_framework.exceptions import ValidationError
-from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView
 from rest_framework.parsers import MultiPartParser
 from rest_framework.viewsets import ModelViewSet
 
 from orders.models import Type, Company, Images, Rating, Comments, Sales, Basket, Order, Payments
-from orders.serializers import TypeModelSerializer, CompanyModelSerializer, ImagesCreateModelSerializer, \
-    RatingModelSerializer, CommentsModelSerializer, SalesModelSerializer, BasketModelSerializer, OrderModelSerializer, \
-    PaymentsModelSerializer, ImagesListModelSerializer, CommentsListModelSerializer
+from orders.serializers import TypeModelSerializer, CompanyModelSerializer, RatingModelSerializer, \
+    CommentsModelSerializer, SalesModelSerializer, BasketModelSerializer, OrderModelSerializer, \
+    PaymentsModelSerializer, ImagesListModelSerializer, CommentsListModelSerializer, ImagesCreateUpdateModelSerializer
 from shared.django import IsOwnerOrIsAdminOrReadOnly, SampleViewSet
 
 
@@ -23,7 +23,13 @@ class CompanyModelViewSet(ModelViewSet):
 
 class ImagesModelCreateAPIView(CreateAPIView):
     queryset = Images.objects.all()
-    serializer_class = ImagesCreateModelSerializer
+    serializer_class = ImagesCreateUpdateModelSerializer
+    parser_classes = (MultiPartParser,)
+
+
+class ImagesModelUpdateAPIView(UpdateAPIView):
+    queryset = Images.objects.all()
+    serializer_class = ImagesCreateUpdateModelSerializer
     parser_classes = (MultiPartParser,)
 
 
@@ -48,15 +54,14 @@ class CommentsListAPIView(ListAPIView):
     serializer_class = CommentsListModelSerializer
 
     def get(self, request, *args, **kwargs):
-        if ContentType.objects.filter(name=kwargs['model_name']).exists():
-            model_name = kwargs['model_name']
-            model_id = ContentType.objects.filter(name=kwargs['model_name']).id
-            if model_name.model_class().objects.filter(id=kwargs['object_id']).exists():
-                object_id = model_name.model_class().objects.filter(id=kwargs['object_id']).id
+        if ContentType.objects.filter(model=kwargs['model_name']).exists():
+            model = ContentType.objects.get(model=f"{kwargs['model_name']}").model_class()
+            model_id = ContentType.objects.filter(model=kwargs['model_name']).first().id
+            if model.objects.filter(id=kwargs['object_id']).exists():
+                object_id = model.objects.first(id=kwargs['object_id']).id
                 return Comments.objects.filter(content_type=model_id, object_id=object_id)
             raise ValidationError("Object not found", 404)
         raise ValidationError("Page not found", 404)
-
 
 
 class SalesModelViewSet(ModelViewSet):

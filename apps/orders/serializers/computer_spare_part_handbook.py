@@ -3,7 +3,7 @@ from rest_framework.fields import HiddenField, CurrentUserDefault
 from rest_framework.serializers import ModelSerializer, ValidationError
 
 from orders.models import Type, Company, Images, Rating, Comments, Sales, Basket, Order, Payments
-from shared.django import GetUserNameSerializer
+from shared.django import GetUserNameSerializer, has_difference_images
 
 
 class TypeModelSerializer(ModelSerializer):
@@ -18,7 +18,7 @@ class CompanyModelSerializer(ModelSerializer):
         exclude = ()
 
 
-class ImagesCreateModelSerializer(ModelSerializer):
+class ImagesCreateUpdateModelSerializer(ModelSerializer):
 
     def get_validators(self):
         data = self.context['request'].data
@@ -28,6 +28,15 @@ class ImagesCreateModelSerializer(ModelSerializer):
                 return super().get_validators()
             raise ValidationError("Object not found", 404)
         raise ValidationError("Page not found", 404)
+
+    def update(self, instance, validated_data):
+        old_image = instance['image']
+        new_image = validated_data['image']
+        if not has_difference_images(old_image, new_image):
+            # if hasn't differences between images
+            pass
+        # Delete old photo
+        return super().update(instance, validated_data)
 
     class Meta:
         model = Images
@@ -60,7 +69,6 @@ class CommentsModelSerializer(ModelSerializer):
 
 
 class CommentsListModelSerializer(ModelSerializer):
-
     class Meta:
         model = Comments
         exclude = ()
