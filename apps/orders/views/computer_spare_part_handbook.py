@@ -7,7 +7,8 @@ from rest_framework.viewsets import ModelViewSet
 from orders.models import Type, Company, Images, Rating, Comments, Sales, Basket, Order, Payments
 from orders.serializers import TypeModelSerializer, CompanyModelSerializer, RatingModelSerializer, \
     CommentsModelSerializer, SalesModelSerializer, BasketModelSerializer, OrderModelSerializer, \
-    PaymentsModelSerializer, ImagesListModelSerializer, CommentsListModelSerializer, ImagesCreateUpdateModelSerializer
+    PaymentsModelSerializer, ImagesListModelSerializer, CommentsListModelSerializer, ImagesCreateModelSerializer, \
+    ImagesUpdateModelSerializer
 from shared.django import IsOwnerOrIsAdminOrReadOnly, SampleViewSet
 
 
@@ -23,13 +24,13 @@ class CompanyModelViewSet(ModelViewSet):
 
 class ImagesModelCreateAPIView(CreateAPIView):
     queryset = Images.objects.all()
-    serializer_class = ImagesCreateUpdateModelSerializer
+    serializer_class = ImagesCreateModelSerializer
     parser_classes = (MultiPartParser,)
 
 
 class ImagesModelUpdateAPIView(UpdateAPIView):
     queryset = Images.objects.all()
-    serializer_class = ImagesCreateUpdateModelSerializer
+    serializer_class = ImagesUpdateModelSerializer
     parser_classes = (MultiPartParser,)
 
 

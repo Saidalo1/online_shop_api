@@ -8,7 +8,7 @@ from root.settings import BASE_DIR
 
 # Delete default image of object
 def delete_main_photo(model, pk):
-    if model.objects.get(id=pk).image.url:
+    if model.objects.filter(id=pk).exists() and model.objects.get(id=pk).image.url:
         image_url = model.objects.get(id=pk).image.url
         os.remove(BASE_DIR + image_url)
 
@@ -37,8 +37,10 @@ def upload_name_video_card(instance, filename):
 def has_difference_images(img1, img2):
     image_1 = Image.open(img1)
     image_2 = Image.open(img2)
-    result = ImageChops.difference(image_1, image_2).getbbox()
-    if result is None:
-        print('Differences not found')
-        return False
+    if image_1.size == image_2.size:
+        result = ImageChops.difference(image_1, image_2)
+        if result.getbbox() is None:
+            # difference not found
+            return False
+    # difference found
     return True

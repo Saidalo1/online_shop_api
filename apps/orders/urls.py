@@ -28,5 +28,5 @@ urlpatterns = [
 
 
     # comments
-    path('<str:model_name>/<int:object_pk>/comments', CommentsListAPIView.as_view()),
+    path('product/<str:model_name>/<int:object_pk>/comments', CommentsListAPIView.as_view()),
 ]
