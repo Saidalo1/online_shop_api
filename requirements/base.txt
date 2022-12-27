@@ -7,3 +7,4 @@ drf-yasg==1.21.4
 Pillow==9.3.0
 djangorestframework-simplejwt==5.2.2
 django-mptt==0.14.0
+six==1.16.0

@@ -9,6 +9,7 @@ from users.models import User
 class UserCreateModelSerializer(ModelSerializer):
     password = CharField(max_length=255, write_only=True)
     confirm_password = CharField(max_length=255, write_only=True)
+    # here is email
 
     def validate(self, attrs):
         confirm_password = attrs.pop('confirm_password')
