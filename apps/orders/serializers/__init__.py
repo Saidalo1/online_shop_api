@@ -1,5 +1,4 @@
-from orders.serializers.computer_spare_part import CentralProcessingUnitModelSerializer, VideoCardModelSerializer
-from orders.serializers.computer_spare_part_handbook import TypeModelSerializer, CompanyModelSerializer, \
-    ImagesCreateModelSerializer, ImagesUpdateModelSerializer, \
-    RatingModelSerializer, CommentsModelSerializer, SalesModelSerializer, BasketModelSerializer, OrderModelSerializer, \
-    PaymentsModelSerializer, ImagesListModelSerializer, CommentsListModelSerializer
+from orders.serializers.product import ProductModelSerializer
+from orders.serializers.product_handbook import CompanyModelSerializer, ImagesModelSerializer, RatingModelSerializer, \
+    CommentsModelSerializer, BasketModelSerializer, OrderModelSerializer, PaymentsModelSerializer, \
+    CommentsListModelSerializer

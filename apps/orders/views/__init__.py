@@ -1,5 +1,4 @@
-from orders.views.computer_spare_part import CentralProcessingUnitModelViewSet, VideoCardModelViewSet
-from orders.views.computer_spare_part_handbook import TypeModelViewSet, CompanyModelViewSet, \
-    RatingModelViewSet, CommentsModelViewSet, SalesModelViewSet, BasketModelViewSet, OrderModelViewSet, \
-    PaymentsModelViewSet, ImagesModelListAPIView, ImagesModelCreateAPIView, ImagesModelUpdateAPIView, \
+from orders.views.product import ProductReadOnlyModelViewSet
+from orders.views.product_handbook import CompanyReadOnlyModelViewSet, RatingModelViewSet, BasketModelViewSet, \
+    OrderReadOnlyViewSet, PaymentsModelViewSet, ImagesModelListAPIView, ImagesModelDetailAPIView, \
     CommentsListAPIView

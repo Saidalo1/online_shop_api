@@ -20,4 +20,4 @@ class ActivateUserApiView(APIView):
             user.is_active = True
             user.save()
             return Response({'message': 'User is activated'})
-        return Response({'message': 'invalid link'}, HTTP_404_NOT_FOUND)
+        return Response({'message': 'Invalid link'}, HTTP_404_NOT_FOUND)

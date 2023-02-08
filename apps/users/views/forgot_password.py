@@ -1,5 +1,6 @@
 from django.core.mail import send_mail
 from rest_framework.generics import GenericAPIView
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from root.settings import EMAIL_HOST_USER
@@ -10,8 +11,10 @@ from users.serializers import ForgotPasswordSerializer
 class ForgotPasswordApiView(GenericAPIView):
     queryset = User.objects.all()
     serializer_class = ForgotPasswordSerializer
+    permission_classes = (AllowAny,)
 
-    def __send_email_confirmation_token(self, username):
+    @staticmethod
+    def __send_email_confirmation_token(username):
         user = User.objects.filter(username=username).first()
         send_mail('Reset password', 'For reset password click here', EMAIL_HOST_USER, [user.email])
 

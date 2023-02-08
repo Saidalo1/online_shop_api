@@ -37,10 +37,14 @@ INSTALLED_APPS = [
     'apps.users.apps.UsersConfig',
 
     # Third party apps
-    'rest_framework',
-    'django_filters',
-    'drf_yasg',
-    'rest_framework_simplejwt',
+    'rest_framework',  # for API
+    'django_filters',  # for filters
+    'drf_yasg',  # for swagger
+    'rest_framework_simplejwt',  # for auth
+    'ckeditor',  # for html codes in db
+    'django.contrib.postgres',  # for HStoreField
+    'rangefilter',  # for filter by price in admin.py
+    'django_admin_hstore_widget',  # for hstore widget in admin.py
 ]
 
 MIDDLEWARE = [
@@ -57,9 +61,9 @@ ROOT_URLCONF = 'root.urls'
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'shared.django.IsAdminUserOrReadOnly',
-    ],
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'shared.django.IsAdminUserOrReadOnly',
+    # ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
@@ -160,6 +164,6 @@ SWAGGER_SETTINGS = {
 # Email settings
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = env('EMAIL_PORT')
-EMAIL_HOST = env('EMAIL_HOST')
-EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'

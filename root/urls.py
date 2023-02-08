@@ -3,19 +3,19 @@ from django.contrib import admin
 from django.urls import re_path, include, path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from rest_framework import permissions
+from rest_framework.permissions import AllowAny
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Computer Spare Part Shop API",
+        title="Online shop API",
         default_version='v1',
-        description="CSP Shop",
+        description="Online Shop",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="contact@snippets.local"),
         license=openapi.License(name="BSD License"),
     ),
     public=True,
-    permission_classes=[permissions.AllowAny],
+    permission_classes=[AllowAny],
 )
 
 urlpatterns = [
