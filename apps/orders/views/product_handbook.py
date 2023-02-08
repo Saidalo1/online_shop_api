@@ -71,16 +71,7 @@ class CommentsListAPIView(ListAPIView):
 
 class CommentsCreateAPIView(CreateAPIView):
     serializer_class = CommentsModelSerializer
-
-    def create(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
-
-    def perform_create(self, serializer):
-        super().perform_create(serializer)
-
-    # permission_classes = (IsAuthenticated,)
-
-
+    permission_classes = (IsAuthenticated,)
 
 
 class CommentsRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
