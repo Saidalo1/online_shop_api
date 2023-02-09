@@ -7,11 +7,11 @@ from orders.views import CompanyReadOnlyModelViewSet, RatingModelViewSet, Basket
 from orders.views.product_handbook import CommentsRetrieveUpdateDestroyAPIView, CommentsCreateAPIView
 
 router_v1 = routers.SimpleRouter()
-router_v1.register('products', ProductReadOnlyModelViewSet)
-router_v1.register('company', CompanyReadOnlyModelViewSet)
-router_v1.register('rating', RatingModelViewSet)
-router_v1.register('basket', BasketModelViewSet)
-router_v1.register('orders/get-my-orders', OrderReadOnlyViewSet)
+router_v1.register('products', ProductReadOnlyModelViewSet, 'products')
+router_v1.register('company', CompanyReadOnlyModelViewSet, 'company')
+router_v1.register('rating', RatingModelViewSet, 'rating')
+router_v1.register('basket', BasketModelViewSet, 'basket')
+router_v1.register('orders/get-my-orders', OrderReadOnlyViewSet, 'orders')
 
 urlpatterns = [
     path('', include(router_v1.urls)),

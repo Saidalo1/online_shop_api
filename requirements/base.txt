@@ -13,3 +13,6 @@ Faker==16.6.1
 faker-commerce==1.0.3
 model-bakery==1.10.1
 django-admin-hstore-widget==1.2.1
+pytest==7.2.1
+pytest-django==4.5.2
+

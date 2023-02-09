@@ -2,14 +2,9 @@ from ckeditor.fields import RichTextField
 from django.contrib.postgres.fields import HStoreField
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models import FloatField, IntegerField, CharField, \
-    ImageField, Manager, ForeignKey, CASCADE
+    ImageField, ForeignKey, CASCADE
 
-from shared.django import TimeBaseModel, upload_image_product_url
-
-
-class ProductManager(Manager):
-    def get_queryset(self):
-        return super(ProductManager, self).get_queryset().filter(count__gt=0)
+from shared.django import TimeBaseModel, upload_image_product_url, ProductManager
 
 
 class Product(TimeBaseModel):
@@ -43,4 +38,3 @@ class Product(TimeBaseModel):
     class Meta:
         ordering = ('-created_at',)
         db_table = 'product'
-

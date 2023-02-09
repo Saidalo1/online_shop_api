@@ -7,7 +7,7 @@ from mptt.models import MPTTModel
 from shared.django import TimeBaseModel, upload_other_images_product_url
 
 
-class Category(Model):
+class Category(TimeBaseModel):
     name = CharField(max_length=50)
 
     def __str__(self):
@@ -18,7 +18,7 @@ class Category(Model):
         verbose_name_plural = "Categories"
 
 
-class SubCategory(Model):
+class SubCategory(TimeBaseModel):
     name = CharField(max_length=50)
     category = ForeignKey('orders.Category', CASCADE)
 
@@ -30,7 +30,7 @@ class SubCategory(Model):
         verbose_name_plural = "Sub Categories"
 
 
-class Company(Model):
+class Company(TimeBaseModel):
     name = CharField(max_length=200)
 
     def __str__(self):
