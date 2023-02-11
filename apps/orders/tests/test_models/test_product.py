@@ -21,7 +21,7 @@ class TestProductView:
     @pytest.fixture
     def sub_category(self, categories):
         fake = Faker()
-        return baker.make(SubCategory, name=fake.text()[:50], category=cycle(categories))
+        return baker.make(SubCategory, name=fake.text()[:50], category=fake.random.choice(categories))
 
     @pytest.fixture
     def sub_categories(self, categories):
@@ -29,29 +29,44 @@ class TestProductView:
         return baker.make(SubCategory, _quantity=10, name=fake.text()[:50], category=cycle(categories))
 
     @pytest.fixture
-    def product(self, sub_categories):
+    def product(self, sub_category):
         fake = Faker()
         fake.add_provider(Provider)
-        return baker.make(Product, name=random.choice(PRODUCT_DATA['product']), description=fake.paragraph(nb_sentences=15),
-                   count=fake.pyint(), price=fake.ecommerce_price(),
-                   image=fake.file_path(category='image'),
-                   category=cycle(sub_categories), details=fake.pydict(), sale_percent=fake.random_int(0, 100))
+        return baker.make(Product, name=random.choice(PRODUCT_DATA['product']),
+                          description=fake.paragraph(nb_sentences=15),
+                          count=fake.pyint(), price=fake.ecommerce_price(),
+                          image=fake.file_path(category='image'),
+                          category=sub_category, details=fake.pydict(), sale_percent=fake.random_int(0, 100))
 
     @pytest.fixture
     def products(self, sub_categories):
         fake = Faker()
         fake.add_provider(Provider)
         return baker.make(Product, name=cycle(PRODUCT_DATA['product']), description=fake.paragraph(nb_sentences=15),
-                   count=fake.pyint(), price=fake.ecommerce_price(),
-                   image=fake.file_path(category='image'),
-                   category=cycle(sub_categories), details=fake.pydict(), sale_percent=fake.random_int(0, 100),
-                   _quantity=10)
+                          count=fake.pyint(), price=fake.ecommerce_price(),
+                          image=fake.file_path(category='image'),
+                          category=cycle(sub_categories), details=fake.pydict(), sale_percent=fake.random_int(0, 100),
+                          _quantity=10)
 
     def test_create_product_model(self, products, sub_category):
-        product = Product.objects.create(name='New Product', category=sub_category)
+        fake = Faker()
+        fake.add_provider(Provider)
+        product = baker.make(Product, name='New Product',
+                             description='This is top product',
+                             count=50, price=765.50,
+                             image='/products/Intel Core i5-5460K/a.jpg',
+                             category=sub_category, details={"top processor": 5}, sale_percent=5)
         count = Product.objects.count()
         assert count == 11
         assert product.name == 'New Product'
+        assert product.description == 'This is top product'
+        assert product.count == 50
+        assert product.price == 765.50
+        assert product.image == '/products/Intel Core i5-5460K/a.jpg'
+        assert product.category == sub_category
+        assert product.details == {"top processor": 5}
+        assert product.sale_percent == 5
+        assert product.rating == 0.0
 
         # wrong test
         try:

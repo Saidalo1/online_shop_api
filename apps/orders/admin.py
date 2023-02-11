@@ -4,7 +4,7 @@ from django.forms import ModelForm
 from django_admin_hstore_widget.forms import HStoreFormField
 from rangefilter.filters import DateRangeFilter, DateTimeRangeFilter, NumericRangeFilter
 
-from orders.models import Product, ProductImages, Category, SubCategory, Company, Rating, ProductComments, Basket, \
+from orders.models import Product, ProductImages, Category, SubCategory, Company, ProductRating, ProductComments, Basket, \
     Order, Payment
 from shared.django import delete_all_photos, delete_main_photo
 
@@ -70,7 +70,7 @@ class ImagesAdmin(ModelAdmin):
     exclude = ()
 
 
-@admin.register(Rating)
+@admin.register(ProductRating)
 class RatingAdmin(ModelAdmin):
     exclude = ()
 

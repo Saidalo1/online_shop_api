@@ -4,6 +4,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models import FloatField, IntegerField, CharField, \
     ImageField, ForeignKey, CASCADE
 
+from orders.models.product_handbook import ProductRating
 from shared.django import TimeBaseModel, upload_image_product_url, ProductManager
 
 
@@ -34,6 +35,13 @@ class Product(TimeBaseModel):
         if self.sale_percent > 0:
             return self.price - self.price * self.sale_percent / 100
         return self.price
+
+    @property
+    def rating(self):
+        product_rating = ProductRating.objects.filter(product_id=self.id)
+        if product_rating.count() > 0:
+            return f"{sum(product_rating.values_list('rating')) / product_rating.count():.2f}"
+        return 0.00
 
     class Meta:
         ordering = ('-created_at',)

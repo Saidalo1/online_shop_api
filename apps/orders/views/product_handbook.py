@@ -2,7 +2,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView,
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
-from orders.models import Company, Rating, ProductComments, Basket, Order, Payment, ProductImages
+from orders.models import Company, ProductRating, ProductComments, Basket, Order, Payment, ProductImages
 from orders.serializers import CompanyModelSerializer, RatingModelSerializer, \
     CommentsModelSerializer, BasketModelSerializer, OrderModelSerializer, \
     PaymentsModelSerializer, ImagesModelSerializer
@@ -27,12 +27,12 @@ class ImagesModelDetailAPIView(RetrieveAPIView):
 
 
 class RatingModelViewSet(ModelViewSet):
-    queryset = Rating.objects.all()
+    queryset = ProductRating.objects.all()
     serializer_class = RatingModelSerializer
     permission_classes = (IsOwnerOrIsAdminOrReadOnly,)
 
     def get_queryset(self):
-        return Rating.objects.filter(user_id=self.request.user.pk)
+        return ProductRating.objects.filter(user_id=self.request.user.pk)
 
 
 class BasketModelViewSet(ModelViewSet):

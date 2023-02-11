@@ -1,7 +1,7 @@
 from rest_framework.fields import HiddenField, CurrentUserDefault
 from rest_framework.serializers import ModelSerializer
 
-from orders.models import Company, ProductImages, Rating, ProductComments, Basket, Order, Payment
+from orders.models import Company, ProductImages, ProductRating, ProductComments, Basket, Order, Payment
 from shared.django import GetUserNameSerializer
 
 
@@ -20,7 +20,7 @@ class ImagesModelSerializer(ModelSerializer):
 
 class RatingModelSerializer(ModelSerializer):
     class Meta:
-        model = Rating
+        model = ProductRating
         exclude = ()
 
 

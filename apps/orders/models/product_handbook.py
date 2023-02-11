@@ -50,7 +50,7 @@ class ProductImages(Model):
         verbose_name_plural = "Images"
 
 
-class Rating(Model):
+class ProductRating(Model):
     product = ForeignKey('orders.Product', CASCADE)
     rating = IntegerField(default=0)
     user = ForeignKey('users.User', CASCADE)
