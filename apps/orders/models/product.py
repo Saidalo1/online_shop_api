@@ -5,7 +5,7 @@ from django.db.models import FloatField, IntegerField, CharField, \
     ImageField, ForeignKey, CASCADE
 
 from orders.models.product_handbook import ProductRating
-from shared.django import TimeBaseModel, upload_image_product_url, ProductManager
+from shared.django import TimeBaseModel, upload_image_product_url
 
 
 class Product(TimeBaseModel):
@@ -25,7 +25,6 @@ class Product(TimeBaseModel):
         MaxValueValidator(100),
         MinValueValidator(0)
     ])
-    objects = ProductManager()
 
     def __str__(self):
         return self.name

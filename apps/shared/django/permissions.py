@@ -10,11 +10,18 @@ class IsAdminUserOrReadOnly(IsAdminUser):
 
 class IsOwnerOrIsAdminOrReadOnly(BasePermission):
 
+    def has_permission(self, request, view):
+        if request.method == 'POST' and not request.user.is_authenticated:
+            return False
+        return super().has_permission(request, view)
+
     def has_object_permission(self, request, view, obj):
         if request.method in SAFE_METHODS:
             return True
 
-        if request.user and request.user.is_staff:
-            return True
+        if request.user:
+            if request.user.is_staff:
+                return True
+            return obj.user == request.user
 
-        return obj.user == request.user
+        return False

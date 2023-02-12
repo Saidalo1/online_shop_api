@@ -1,8 +1,8 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
-from orders.models import Company, ProductRating, ProductComments, Basket, Order, Payment, ProductImages
+from orders.models import Company, ProductRating, ProductComment, Basket, Order, Payment, ProductImage
 from orders.serializers import CompanyModelSerializer, RatingModelSerializer, \
     CommentsModelSerializer, BasketModelSerializer, OrderModelSerializer, \
     PaymentsModelSerializer, ImagesModelSerializer
@@ -18,11 +18,11 @@ class ImagesModelListAPIView(ListAPIView):
     serializer_class = ImagesModelSerializer
 
     def get_queryset(self):
-        return ProductImages.objects.filter(product_id=self.kwargs.get('product_pk'))
+        return ProductImage.objects.filter(product_id=self.kwargs.get('product_pk'))
 
 
 class ImagesModelDetailAPIView(RetrieveAPIView):
-    queryset = ProductImages.objects.all()
+    queryset = ProductImage.objects.all()
     serializer_class = ImagesModelSerializer
 
 
@@ -63,15 +63,23 @@ class PaymentsModelViewSet(ModelViewSet):
 
 class CommentsListAPIView(ListAPIView):
     serializer_class = CommentsModelSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     def get_queryset(self):
-        return ProductComments.objects.filter(user_id=self.request.user.pk)
+        return ProductComment.objects.filter(product_id=self.kwargs.get('product_pk'))
 
 
 class CommentsCreateAPIView(CreateAPIView):
     serializer_class = CommentsModelSerializer
     permission_classes = (IsAuthenticated,)
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['product_pk'] = self.kwargs.get('product_pk')
+        return context
+
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
 
 
 class CommentsRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
@@ -79,4 +87,4 @@ class CommentsRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsOwnerOrIsAdminOrReadOnly,)
 
     def get_queryset(self):
-        return ProductComments.objects.filter(product_id=self.kwargs.get('product_pk'))
+        return ProductComment.objects.filter(product_id=self.kwargs.get('product_pk'))

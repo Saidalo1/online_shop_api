@@ -22,7 +22,6 @@ urlpatterns = [
 
     # product-comments
     path('products/<int:product_pk>/comments/', CommentsListAPIView.as_view(), name='comments_list'),
-    path('products/<int:product_pk>/comments/create/', CommentsCreateAPIView.as_view(), name='comments_list'),
-    path('products/<int:product_pk>/comments/<int:pk>/', CommentsRetrieveUpdateDestroyAPIView.as_view(),
-         name='comments_list'),
+    path('products/<int:product_pk>/comments/create/', CommentsCreateAPIView.as_view(), name='comments_create'),
+    path('products/<int:product_pk>/comments/<int:pk>/', CommentsRetrieveUpdateDestroyAPIView.as_view()),
 ]

@@ -4,7 +4,8 @@ from django.forms import ModelForm
 from django_admin_hstore_widget.forms import HStoreFormField
 from rangefilter.filters import DateRangeFilter, DateTimeRangeFilter, NumericRangeFilter
 
-from orders.models import Product, ProductImages, Category, SubCategory, Company, ProductRating, ProductComments, Basket, \
+from orders.models import Product, ProductImage, Category, SubCategory, Company, ProductRating, ProductComment, \
+    Basket, \
     Order, Payment
 from shared.django import delete_all_photos, delete_main_photo
 
@@ -33,7 +34,7 @@ class ProductAdmin(ModelAdmin):
 
     def delete_model(self, request, obj):
         delete_main_photo(Product, obj.pk)
-        delete_all_photos(ProductImages, obj.pk)
+        delete_all_photos(ProductImage, obj.pk)
         super().delete_model(request, obj)
 
     def render_change_form(self, request, context, add=False, change=False, form_url="", obj=None):
@@ -65,7 +66,7 @@ class CompanyAdmin(ModelAdmin):
     exclude = ()
 
 
-@admin.register(ProductImages)
+@admin.register(ProductImage)
 class ImagesAdmin(ModelAdmin):
     exclude = ()
 
@@ -75,7 +76,7 @@ class RatingAdmin(ModelAdmin):
     exclude = ()
 
 
-@admin.register(ProductComments)
+@admin.register(ProductComment)
 class CommentsAdmin(ModelAdmin):
     exclude = ()
 

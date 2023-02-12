@@ -150,9 +150,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
-        'basic': {
-            'type': 'basic'
-        },
         "JWT [Bearer {JWT}]": {
             "name": "Authorization",
             "type": "apiKey",

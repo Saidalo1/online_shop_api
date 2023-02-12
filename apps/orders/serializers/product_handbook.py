@@ -1,7 +1,7 @@
 from rest_framework.fields import HiddenField, CurrentUserDefault
 from rest_framework.serializers import ModelSerializer
 
-from orders.models import Company, ProductImages, ProductRating, ProductComments, Basket, Order, Payment
+from orders.models import Company, ProductImage, ProductRating, ProductComment, Basket, Order, Payment
 from shared.django import GetUserNameSerializer
 
 
@@ -12,9 +12,8 @@ class CompanyModelSerializer(ModelSerializer):
 
 
 class ImagesModelSerializer(ModelSerializer):
-
     class Meta:
-        model = ProductImages
+        model = ProductImage
         exclude = ()
 
 
@@ -26,7 +25,6 @@ class RatingModelSerializer(ModelSerializer):
 
 class CommentsModelSerializer(ModelSerializer):
     user = HiddenField(default=CurrentUserDefault())
-    product = HiddenField(default=int)
 
     def to_representation(self, instance):
         represent = super().to_representation(instance)
@@ -37,6 +35,7 @@ class CommentsModelSerializer(ModelSerializer):
         return super().create(validated_data)
 
     def save(self, **kwargs):
+        kwargs['product_id'] = self.context['product_pk']
         return super().save(**kwargs)
 
     @staticmethod
@@ -50,17 +49,19 @@ class CommentsModelSerializer(ModelSerializer):
         return obj.author.username
 
     class Meta:
-        model = ProductComments
-        exclude = ('is_active',)
+        model = ProductComment
+        exclude = ('is_active', 'product',)
 
 
 class CommentsListModelSerializer(ModelSerializer):
     class Meta:
-        model = ProductComments
+        model = ProductComment
         exclude = ()
 
 
 class BasketModelSerializer(ModelSerializer):
+    user = HiddenField(default=CurrentUserDefault())
+
     class Meta:
         model = Basket
         exclude = ()

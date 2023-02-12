@@ -41,13 +41,12 @@ class Company(TimeBaseModel):
         verbose_name_plural = "Companies"
 
 
-class ProductImages(Model):
+class ProductImage(Model):
     product = ForeignKey('orders.Product', CASCADE)
     image = ImageField(upload_to=upload_other_images_product_url)
 
     class Meta:
         db_table = 'images'
-        verbose_name_plural = "Images"
 
 
 class ProductRating(Model):
@@ -62,21 +61,22 @@ class ProductRating(Model):
         db_table = 'rating'
 
 
-class ProductComments(TimeBaseModel, MPTTModel):
+class ProductComment(TimeBaseModel, MPTTModel):
     product = ForeignKey('orders.Product', CASCADE)
-    text = TextField(max_length=500)
+    title = CharField(max_length=250)
+    text = TextField(max_length=1500)
     user = ForeignKey('users.User', CASCADE)
     parent = TreeForeignKey('self', CASCADE, 'children', null=True, blank=True)
-    is_active = BooleanField(default=True)
+    is_active = BooleanField(default=False)
 
     def __str__(self):
         return f"{self.user} {self.product}"
 
     class MPTTMeta:
-        order_insertion_by = ['name']
+        order_insertion_by = ['title']
 
     def children(self):
-        return ProductComments.objects.filter(parent=self)
+        return ProductComment.objects.filter(parent=self)
 
     @property
     def is_parent(self):
@@ -86,7 +86,6 @@ class ProductComments(TimeBaseModel, MPTTModel):
 
     class Meta:
         db_table = 'comments'
-        verbose_name_plural = "Comments"
 
 
 class Basket(Model):

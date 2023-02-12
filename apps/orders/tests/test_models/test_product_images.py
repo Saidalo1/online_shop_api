@@ -6,7 +6,7 @@ from faker import Faker
 from faker_commerce import PRODUCT_DATA, Provider
 from model_bakery import baker
 
-from orders.models import Product, Category, SubCategory, ProductImages
+from orders.models import Product, Category, SubCategory, ProductImage
 
 
 @pytest.mark.django_db
@@ -38,23 +38,23 @@ class TestProductImagesView:
 
     @pytest.fixture
     def product_image(self, product, fake):
-        return baker.make(ProductImages, product=product, image=fake.file_path(category='image'))
+        return baker.make(ProductImage, product=product, image=fake.file_path(category='image'))
 
     @pytest.fixture
     def product_images(self, product, fake):
-        return baker.make(ProductImages, _quantity=10, product=product, image=fake.file_path(category='image'))
+        return baker.make(ProductImage, _quantity=10, product=product, image=fake.file_path(category='image'))
 
     def test_create_product_image_model(self, product, product_images):
-        assert ProductImages.objects.count() == 10
-        product_image = ProductImages.objects.create(product=product, image='/product/images/1.jpg')
-        count = ProductImages.objects.count()
+        assert ProductImage.objects.count() == 10
+        product_image = ProductImage.objects.create(product=product, image='/product/images/1.jpg')
+        count = ProductImage.objects.count()
         assert count == 11
         assert product_image.product == product
         assert product_image.image == '/product/images/1.jpg'
 
         # wrong test
         try:
-            ProductImages.objects.create(product=None, image=None)
+            ProductImage.objects.create(product=None, image=None)
             assert False
         except IntegrityError:
             assert True
@@ -76,8 +76,8 @@ class TestProductImagesView:
             assert True
 
     def test_delete_product_image_model(self, product_image):
-        old_count = ProductImages.objects.count()
+        old_count = ProductImage.objects.count()
         assert old_count == 1
         product_image.delete()
-        new_count = ProductImages.objects.count()
+        new_count = ProductImage.objects.count()
         assert new_count == 0
