@@ -41,7 +41,7 @@ class Company(TimeBaseModel):
         verbose_name_plural = "Companies"
 
 
-class ProductImage(Model):
+class ProductImage(TimeBaseModel):
     product = ForeignKey('orders.Product', CASCADE)
     image = ImageField(upload_to=upload_other_images_product_url)
 
@@ -49,7 +49,7 @@ class ProductImage(Model):
         db_table = 'images'
 
 
-class ProductRating(Model):
+class ProductRating(TimeBaseModel):
     product = ForeignKey('orders.Product', CASCADE)
     rating = IntegerField(default=0)
     user = ForeignKey('users.User', CASCADE)
@@ -88,7 +88,7 @@ class ProductComment(TimeBaseModel, MPTTModel):
         db_table = 'comments'
 
 
-class Basket(Model):
+class Basket(TimeBaseModel):
     user = ForeignKey('users.User', CASCADE)
     count = IntegerField(default=0, validators=(MinValueValidator(0),))
     product = ForeignKey('orders.Product', CASCADE)
