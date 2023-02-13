@@ -5,8 +5,9 @@ from django.utils.http import urlsafe_base64_encode
 from faker import Faker
 from faker_commerce import Provider
 from jwt.utils import force_bytes
+from rest_framework.exceptions import ErrorDetail
 from rest_framework.reverse import reverse
-from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK
+from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_400_BAD_REQUEST
 
 from users.models import User
 from users.utils.tokens import account_activation_token
@@ -42,10 +43,22 @@ class TestAuthAPIView:
         assert user.is_active is False
         activation_url = reverse('activate_user',
                                  kwargs={'uidb64': urlsafe_base64_encode(force_bytes(str(user.pk))),
-                                         'token': account_activation_token.make_token(user), })
+                                         'token': account_activation_token.make_token(user)})
         response = client.get(activation_url)
         user = User.objects.get(username=username, email=email)
         assert response.status_code == HTTP_200_OK
         assert user.username == username
         assert user.email == email
         assert user.is_active is True
+
+        # wrong test
+        response = client.post(url)
+        assert response.status_code == HTTP_400_BAD_REQUEST
+        print(response.data)
+        required_field_error = [ErrorDetail(string='This field is required.', code='required')]
+        assert response.data['username'] == required_field_error
+        assert response.data['email'] == required_field_error
+        assert response.data['password'] == required_field_error
+        assert response.data['confirm_password'] == required_field_error
+        assert len(response.data) == 4
+        assert len(mail.outbox) == 1

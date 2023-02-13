@@ -10,15 +10,21 @@ from orders.models import Category
 class TestCategoryView:
 
     @pytest.fixture
+    def faker(self):
+        faker = Faker()
+        return faker
+
+    @pytest.fixture
     def category(self):
         return baker.make(Category)
 
     @pytest.fixture
-    def categories(self):
-        faker = Faker()
-        baker.make(Category, _quantity=10, name=faker.text()[:50])
+    def categories(self, faker):
+        return baker.make(Category, _quantity=10, name=faker.text()[:50])
 
     def test_create_category_model(self, categories):
+        count = Category.objects.count()
+        assert count == 10
         category = Category.objects.create(name='New Category')
         count = Category.objects.count()
         assert count == 11
