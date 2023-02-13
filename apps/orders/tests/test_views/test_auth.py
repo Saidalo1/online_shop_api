@@ -1,14 +1,15 @@
 import pytest
 from django.core import mail
-from django.urls import reverse
-from django.utils.encoding import force_bytes
+from django.urls import reverse_lazy
 from django.utils.http import urlsafe_base64_encode
 from faker import Faker
 from faker_commerce import Provider
-from rest_framework.reverse import reverse_lazy
+from jwt.utils import force_bytes
+from rest_framework.reverse import reverse
 from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK
 
 from users.models import User
+from users.utils.tokens import account_activation_token
 
 
 @pytest.mark.django_db
@@ -35,21 +36,15 @@ class TestAuthAPIView:
         assert response.status_code == HTTP_201_CREATED
         assert response.data['message'] == 'Check your email'
         assert len(response.data) == 1
-
         assert len(mail.outbox) == 1
 
-        for i in mail.outbox:
-            token = i.body.split(' ')[-1]
-            print(i.body)  # <-- the entire email body with the activation url
-        token = token[38:-1]
-        user = User.objects.get(email=email)
-        user_id = urlsafe_base64_encode(force_bytes(user.pk))
-
-        activation_url = reverse('activate_user', kwargs={'user_id': user_id, 'token': token})
-        activation_url = 'http://127.0.0.1' + activation_url
-        response = self.client.get(activation_url, follow=True)
-        user = User.objects.get(email=email)
-
+        user = User.objects.get(username=username, email=email)
+        assert user.is_active is False
+        activation_url = reverse('activate_user',
+                                 kwargs={'uidb64': urlsafe_base64_encode(force_bytes(str(user.pk))),
+                                         'token': account_activation_token.make_token(user), })
+        response = client.get(activation_url)
+        user = User.objects.get(username=username, email=email)
         assert response.status_code == HTTP_200_OK
         assert user.username == username
         assert user.email == email

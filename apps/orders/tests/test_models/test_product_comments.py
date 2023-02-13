@@ -104,6 +104,7 @@ class TestProductCommentsView:
         assert product_comment.product == product
         assert product_comment.text == 'New product'
         assert product_comment.user == user
+        assert ProductComment.objects.count() == 1
 
         # wrong test
         try:
