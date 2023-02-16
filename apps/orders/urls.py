@@ -4,7 +4,8 @@ from rest_framework import routers
 from orders.views import CompanyReadOnlyModelViewSet, RatingModelViewSet, BasketModelViewSet, \
     OrderReadOnlyViewSet, ProductReadOnlyModelViewSet, ImagesModelListAPIView, ImagesModelDetailAPIView, \
     CommentsListAPIView
-from orders.views.product_handbook import CommentsRetrieveUpdateDestroyAPIView, CommentsCreateAPIView
+from orders.views.product_handbook import CommentsRetrieveUpdateDestroyAPIView, CommentsCreateAPIView, \
+    CategoryReadOnlyModelViewSet
 
 router_v1 = routers.SimpleRouter()
 router_v1.register('products', ProductReadOnlyModelViewSet, 'products')
@@ -12,6 +13,7 @@ router_v1.register('company', CompanyReadOnlyModelViewSet, 'company')
 router_v1.register('rating', RatingModelViewSet, 'rating')
 router_v1.register('basket', BasketModelViewSet, 'basket')
 router_v1.register('orders/get-my-orders', OrderReadOnlyViewSet, 'orders')
+router_v1.register('category', CategoryReadOnlyModelViewSet, 'category')
 
 urlpatterns = [
     path('', include(router_v1.urls)),

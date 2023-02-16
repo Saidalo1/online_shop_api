@@ -2,16 +2,21 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView,
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
-from orders.models import Company, ProductRating, ProductComment, Basket, Order, Payment, ProductImage
+from orders.models import Company, ProductRating, ProductComment, Basket, Order, Payment, ProductImage, Category
 from orders.serializers import CompanyModelSerializer, RatingModelSerializer, \
     CommentsModelSerializer, BasketModelSerializer, OrderModelSerializer, \
-    PaymentsModelSerializer, ImagesModelSerializer
+    PaymentsModelSerializer, ImagesModelSerializer, CategoryModelSerializer
 from shared.django import IsOwnerOrIsAdminOrReadOnly
 
 
 class CompanyReadOnlyModelViewSet(ReadOnlyModelViewSet):
     queryset = Company.objects.all()
     serializer_class = CompanyModelSerializer
+
+
+class CategoryReadOnlyModelViewSet(ReadOnlyModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategoryModelSerializer
 
 
 class ImagesModelListAPIView(ListAPIView):
