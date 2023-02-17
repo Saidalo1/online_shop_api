@@ -1,6 +1,5 @@
 import pytest
 from django.core import mail
-from django.urls import reverse_lazy
 from django.utils.http import urlsafe_base64_encode
 from faker import Faker
 from faker_commerce import Provider
@@ -22,8 +21,9 @@ class TestAuthAPIView:
         fake.add_provider(Provider)
         return fake
 
+    @pytest.fixture
     def test_register_api(self, fake, client):
-        url = reverse_lazy('register')
+        url = reverse('register')
         username = fake.user_name()
         email = fake.email()
         password = fake.password()
@@ -52,9 +52,10 @@ class TestAuthAPIView:
         assert user.is_active is True
 
         # wrong test
+
+        # empty field
         response = client.post(url)
         assert response.status_code == HTTP_400_BAD_REQUEST
-        print(response.data)
         required_field_error = [ErrorDetail(string='This field is required.', code='required')]
         assert response.data['username'] == required_field_error
         assert response.data['email'] == required_field_error
@@ -62,3 +63,47 @@ class TestAuthAPIView:
         assert response.data['confirm_password'] == required_field_error
         assert len(response.data) == 4
         assert len(mail.outbox) == 1
+
+        # incorrect field
+        data = {
+            'username': 'a',
+            'email': 'test_email.com',
+            'password': '123321',
+            'confirm_password': '123321'
+        }
+        response = client.post(url, data)
+        assert response.status_code == HTTP_400_BAD_REQUEST
+        assert len(response.data) == 2
+        assert response.data['email'] == [ErrorDetail(string='Enter a valid email address.', code='invalid')]
+        assert response.data['password'] == [ErrorDetail(string='Password is too short.', code='invalid')]
+        data = {
+            'username': fake.user_name(),
+            'email': fake.email(),
+            'password': '123098AS',
+            'confirm_password': '123098ASD'
+        }
+        response = client.post(url, data)
+        assert response.status_code == HTTP_400_BAD_REQUEST
+        assert len(response.data) == 1
+        assert response.data['non_field_errors'] == [ErrorDetail(string="Passwords didn't match.", code='invalid')]
+        return {"username": username, "email": email, "password": password}
+
+    def test_login_api(self, test_register_api, client):
+        url = reverse('token_obtain_pair')
+        response = client.post(url, test_register_api)
+        assert response.status_code == HTTP_200_OK
+        assert response.data['access'] and response.data['refresh']
+        assert response.data['data']['username'] == test_register_api.get('username')
+        assert response.data['data']['email'] == test_register_api.get('email')
+        assert len(response.data) == 3
+
+        # wrong test
+
+        # empty field
+        response = client.post(url)
+        print(response.data)
+        required_field_error = [ErrorDetail(string='This field is required.', code='required')]
+        assert response.status_code == HTTP_400_BAD_REQUEST
+        assert response.data['username'] == required_field_error
+        assert response.data['password'] == required_field_error
+        assert len(response.data) == 2

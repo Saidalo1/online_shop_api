@@ -116,6 +116,22 @@ On Windows:
 7. Go to the installation directory C:\Program Files(x86)\GnuWin32\ to confirm the installation worked.
 ```
 
+Install HStoreExtension:
+
+With database:
+```
+sudo su - postgres              //switch to postgres user
+\c DATABASENAME;                     //connect your database
+CREATE EXTENSION IF NOT EXISTS hstore;      //create extension
+```
+
+With migrations:
+
+```
+Add "HStoreExtension()" to your operations in migrations.
+```
+
+
 Type this command to make migrations and migrate:
 
 ```

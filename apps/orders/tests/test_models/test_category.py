@@ -20,7 +20,7 @@ class TestCategoryView:
 
     @pytest.fixture
     def categories(self, faker):
-        return baker.make(Category, _quantity=10, name=faker.text()[:50])
+        return baker.make(Category, 10, name=faker.text()[:50])
 
     def test_create_category_model(self, categories):
         count = Category.objects.count()

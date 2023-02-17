@@ -1,7 +1,8 @@
 from rest_framework.fields import HiddenField, CurrentUserDefault
 from rest_framework.serializers import ModelSerializer
 
-from orders.models import Company, ProductImage, ProductRating, ProductComment, Basket, Order, Payment, Category
+from orders.models import Company, ProductImage, ProductRating, ProductComment, Basket, Order, Payment, Category, \
+    SubCategory
 from shared.django import GetUserNameSerializer
 
 
@@ -14,6 +15,12 @@ class CompanyModelSerializer(ModelSerializer):
 class CategoryModelSerializer(ModelSerializer):
     class Meta:
         model = Category
+        exclude = ()
+
+
+class SubCategoryModelSerializer(ModelSerializer):
+    class Meta:
+        model = SubCategory
         exclude = ()
 
 
