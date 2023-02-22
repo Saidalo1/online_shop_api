@@ -1,9 +1,12 @@
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.exceptions import NotFound
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.status import HTTP_404_NOT_FOUND
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
 from orders.models import Company, ProductRating, ProductComment, Basket, Order, Payment, ProductImage, Category, \
-    SubCategory
+    SubCategory, Product
 from orders.serializers import CompanyModelSerializer, RatingModelSerializer, \
     CommentsModelSerializer, BasketModelSerializer, OrderModelSerializer, \
     PaymentsModelSerializer, ImagesModelSerializer, CategoryModelSerializer, SubCategoryModelSerializer
@@ -77,6 +80,10 @@ class CommentsListAPIView(ListAPIView):
     permission_classes = (AllowAny,)
 
     def get_queryset(self):
+        try:
+            Product.objects.get(id=self.kwargs.get('product_pk'))
+        except ObjectDoesNotExist:
+            raise NotFound(f"Product with {self.kwargs.get('product_pk')}-id is not found", HTTP_404_NOT_FOUND)
         return ProductComment.objects.filter(product_id=self.kwargs.get('product_pk'))
 
 

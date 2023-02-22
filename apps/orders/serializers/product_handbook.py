@@ -44,9 +44,6 @@ class CommentsModelSerializer(ModelSerializer):
         represent['user'] = GetUserNameSerializer(instance.user).data
         return represent
 
-    def create(self, validated_data):
-        return super().create(validated_data)
-
     def save(self, **kwargs):
         kwargs['product_id'] = self.context['product_pk']
         return super().save(**kwargs)
@@ -67,6 +64,7 @@ class CommentsModelSerializer(ModelSerializer):
 
 
 class CommentsListModelSerializer(ModelSerializer):
+
     class Meta:
         model = ProductComment
         exclude = ()
