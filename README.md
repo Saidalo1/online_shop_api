@@ -13,7 +13,9 @@ It is an online store API system built on Django Rest Framework. It contains eve
 
 ## Screenshots
 
+### Swagger (all request methods and urls)
 ![App Screenshot](https://imgur.com/c2kITAs.png)
+### Products
 ![App Screenshot](https://imgur.com/M8LUsyo.png)
 
 ## About this Project:
