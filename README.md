@@ -15,7 +15,6 @@ It is an online store API system built on Django Rest Framework. It contains eve
 
 ![App Screenshot](https://imgur.com/c2kITAs.png)
 ![App Screenshot](https://imgur.com/M8LUsyo.png)
-![App Screenshot](https://imgur.com/NaU0ro6.png)
 
 ## About this Project:
 
